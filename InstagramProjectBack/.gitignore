@@ -19,6 +19,7 @@
 appsettings.Development.json
 appsettings.Production.json
 appsettings.Staging.json
+appsettings.json
 
 # Ignore Node.js dependencies if you have a frontend
 node_modules/
