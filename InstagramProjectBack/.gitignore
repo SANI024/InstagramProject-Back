@@ -1,0 +1,38 @@
+# Ignore build outputs
+/bin/
+/obj/
+
+# Ignore user-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Ignore JetBrains Rider config folder
+.idea/
+
+# Ignore Visual Studio config folders
+.vs/
+.vscode/
+
+# Ignore ASP.NET Core environment files
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Ignore Node.js dependencies if you have a frontend
+node_modules/
+
+# Ignore temporary files from Visual Studio for Mac
+.vscode/
+
+# Ignore backup files and editor files
+*~
+*.bak
+*.swp
+
+# Ignore Entity Framework migrations (you can keep these if needed)
+*/migrations/
+
+# Ignore published output (if using ASP.NET Core for production)
+publish/

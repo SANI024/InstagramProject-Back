@@ -8,13 +8,16 @@ using System;
 using System.Text;
 using InstagramProjectBack.Models;
 using Microsoft.AspNetCore.Identity;
+using InstagramProjectBack.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
-
+builder.Services.AddScoped<IAuthService, AuthServiceRepository>();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -39,9 +42,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     });
 
 builder.Services.AddAuthorization();
-
-
-builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
@@ -50,7 +50,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.MapOpenApi();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseAuthentication();

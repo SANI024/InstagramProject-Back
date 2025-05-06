@@ -54,14 +54,6 @@ namespace InstagramProjectBack.Repositories
             return new AuthResponceDto { Token = token, ExpiresAt = user.TokenExpiryDate };
         }
 
-        AuthResponceDto IAuthService.Register(UserRegisterDto dto)
-        {
-            throw new NotImplementedException();
-        }
 
-        AuthResponceDto IAuthService.Login(UserLoginDto dto)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
