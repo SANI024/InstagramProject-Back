@@ -1,22 +1,50 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\",
+  "WorkspaceRootPath": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\source\\repos\\instagramprojectback\\instagramprojectback\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\source\\repos\\instagramprojectback\\instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\dto\\authresponcedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\dto\\authresponcedto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\repositories\\authservicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\repositories\\authservicerepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\source\\repos\\instagramprojectback\\instagramprojectback\\instagramprojectback.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\instagramprojectback.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\services\\tokenservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\source\\repos\\instagramprojectback\\instagramprojectback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\repositories\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\repositories\\iauthservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\dto\\userregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\dto\\userregisterdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\dto\\userlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\dto\\userlogindto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,56 +54,140 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 10,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\Data\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "InstagramProjectBack\\Data\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\Data\\AppDbContext.cs",
-              "RelativeToolTip": "InstagramProjectBack\\Data\\AppDbContext.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAA1wAoAAAAAAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "AuthServiceRepository.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\AuthServiceRepository.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Repositories\\AuthServiceRepository.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\AuthServiceRepository.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Repositories\\AuthServiceRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T14:11:30.789Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-05-06T14:05:23.889Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\Program.cs",
-              "RelativeDocumentMoniker": "InstagramProjectBack\\Program.cs",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\Program.cs",
-              "RelativeToolTip": "InstagramProjectBack\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABaAAAAAAAAAA==",
+              "Title": "AuthResponceDto.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\AuthResponceDto.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Dto\\AuthResponceDto.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\AuthResponceDto.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Models\\Dto\\AuthResponceDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-01T14:11:05.268Z"
+              "WhenOpened": "2025-05-06T14:03:44.833Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IAuthService.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\IAuthService.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Repositories\\IAuthService.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\IAuthService.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Repositories\\IAuthService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAwAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T14:02:33.127Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UserRegisterDto.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\UserRegisterDto.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Dto\\UserRegisterDto.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\UserRegisterDto.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Models\\Dto\\UserRegisterDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T13:58:19.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "UserLoginDto.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\UserLoginDto.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Dto\\UserLoginDto.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Dto\\UserLoginDto.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Models\\Dto\\UserLoginDto.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T13:57:54.94Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "User.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\User.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\User.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\User.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Models\\User.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T12:48:59.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "AppDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Data\\AppDbContext.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Data\\AppDbContext.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Data\\AppDbContext.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Data\\AppDbContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T14:11:30.789Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "TokenService.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Services\\TokenService.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Services\\TokenService.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Services\\TokenService.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Services\\TokenService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T13:13:32.292Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\appsettings.json",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\appsettings.json",
               "RelativeDocumentMoniker": "InstagramProjectBack\\appsettings.json",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\appsettings.json",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\appsettings.json",
               "RelativeToolTip": "InstagramProjectBack\\appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-05-01T14:08:43.059Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "InstagramProjectBack.csproj",
-              "DocumentMoniker": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\InstagramProjectBack.csproj",
-              "RelativeDocumentMoniker": "InstagramProjectBack\\InstagramProjectBack.csproj",
-              "ToolTip": "C:\\Users\\PC\\source\\repos\\InstagramProjectBack\\InstagramProjectBack\\InstagramProjectBack.csproj",
-              "RelativeToolTip": "InstagramProjectBack\\InstagramProjectBack.csproj",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAswBsAAAAOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-05-01T14:03:22.834Z"
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Program.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Program.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Program.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Program.cs",
+              "ViewState": "AgIAADAAAAAAAAAAAAAAAD4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-01T14:11:05.268Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "AuthController.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\AuthController.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\AuthController.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\AuthController.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Controllers\\AuthController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-05-06T13:25:05.739Z",
+              "EditorCaption": ""
             }
           ]
         },
