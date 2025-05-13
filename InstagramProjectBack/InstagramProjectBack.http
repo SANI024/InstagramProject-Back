@@ -1,0 +1,6 @@
+@InstagramProjectBack_HostAddress = http://localhost:5150
+
+GET {{InstagramProjectBack_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
