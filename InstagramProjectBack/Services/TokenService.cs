@@ -7,7 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace InstagramProjectBack.Services
 {
-    
+
     public class TokenService
     {
 
@@ -24,11 +24,11 @@ namespace InstagramProjectBack.Services
         public string CreateToken(User user)
         {
             var claims = new List<Claim>
-    {
-        new Claim(ClaimTypes.Name, user.Name),
-        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-        new Claim(ClaimTypes.Role, user.Role)
-    };
+            {
+             new Claim(ClaimTypes.Name, user.Name),
+             new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+             new Claim(ClaimTypes.Email, user.Email)
+            };
 
             var key = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(configuration["AppSettings:Token"]!));

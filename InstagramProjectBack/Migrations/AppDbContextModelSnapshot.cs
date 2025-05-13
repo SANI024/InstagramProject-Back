@@ -30,6 +30,10 @@ namespace InstagramProjectBack.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -38,8 +42,7 @@ namespace InstagramProjectBack.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<string>("Role")
-                        .IsRequired()
+                    b.Property<string>("PofileImage")
                         .HasColumnType("text");
 
                     b.Property<string>("Token")

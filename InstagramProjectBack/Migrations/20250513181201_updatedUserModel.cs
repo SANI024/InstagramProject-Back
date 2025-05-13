@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InstagramProjectBack.Migrations
 {
     /// <inheritdoc />
-    public partial class migration1 : Migration
+    public partial class updatedUserModel : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,7 +19,8 @@ namespace InstagramProjectBack.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Role = table.Column<string>(type: "text", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: false),
+                    PofileImage = table.Column<string>(type: "text", nullable: true),
                     PasswordHash = table.Column<string>(type: "text", nullable: false),
                     Token = table.Column<string>(type: "text", nullable: true),
                     TokenExpiryDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)

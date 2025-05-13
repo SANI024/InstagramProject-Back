@@ -29,7 +29,8 @@ namespace InstagramProjectBack.Repositories
             var user = new User
             {
                 Name = dto.Name,
-                Role = dto.Role
+                Email = dto.Email,
+                PofileImage = dto.ProfileImage
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
@@ -42,7 +43,7 @@ namespace InstagramProjectBack.Repositories
 
         public AuthResponceDto Login(UserLoginDto dto)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Name == dto.Name);
+            var user = _context.Users.FirstOrDefault(u => u.Email == dto.Email);
             if (user == null)
                 throw new Exception("Invalid username or password");
 
