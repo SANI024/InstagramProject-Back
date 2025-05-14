@@ -2,8 +2,8 @@ using InstagramProjectBack.Models;
 
 public interface IFriendRequestRepository
 {
-    object SendFriendRequest(int sender_id, int reciver_id);
-    List<Friend_Request> GetFriendRequestsByReciverId(int reciver_id);
-    object AcceptFriendRequest(int sender_id, int reciver_id);
-    object RejectFriendRequest(int sender_id, int reciver_id);
+    FriendRequestResponseDto SendFriendRequest(int sender_id, int reciver_id);
+    FriendRequestResponseDto GetFriendRequestsByReciverId(int reciver_id);
+    FriendRequestResponseDto AcceptFriendRequest(int sender_id, int reciver_id);
+    FriendRequestResponseDto RejectFriendRequest(int sender_id, int reciver_id);
 }

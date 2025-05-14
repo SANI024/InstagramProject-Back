@@ -16,12 +16,12 @@ namespace InstagramProjectBack.Repositories
             _tokenService = tokenService;
         }
 
-        public object SendFriendRequest(int sender_id, int reciver_id)
+        public FriendRequestResponseDto SendFriendRequest(int sender_id, int reciver_id)
         {
             Friend_Request FriendRequestExists = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
             if (FriendRequestExists != null)
             {
-                return new { message = "Friend request already sent." };
+                return new FriendRequestResponseDto { Success = false, Message = "Friend request already sent." };
             }
             Friend_Request NewFriendRequest = new Friend_Request
             {
@@ -32,53 +32,54 @@ namespace InstagramProjectBack.Repositories
             };
             _context.Friend_Requests.Add(NewFriendRequest);
             _context.SaveChanges();
-            return new { message = "Friend request sent successfully." };
+            return new FriendRequestResponseDto { Success = true, Message = "Friend request sent successfully." };
         }
-        public List<Friend_Request> GetFriendRequestsByReciverId(int reciver_id)
+        public FriendRequestResponseDto GetFriendRequestsByReciverId(int reciver_id)
         {
-            List<Friend_Request> FriendRequests = _context.Friend_Requests.Where(fr => fr.Reciver_Id == reciver_id).ToList();
+            List<Friend_Request> FriendRequests = _context.Friend_Requests
+            .Where(fr => fr.Reciver_Id == reciver_id && fr.Status == FriendRequestStatus.Pending).ToList();
             if (FriendRequests.Count == 0)
             {
-                return new List<Friend_Request>();
+                return new FriendRequestResponseDto { Success = false, Message = "No requests." };
             }
-            return FriendRequests;
+            return new FriendRequestResponseDto { Success = true, Friend_Requests = FriendRequests };
         }
 
 
-        public object AcceptFriendRequest(int sender_id, int reciver_id)
+        public FriendRequestResponseDto AcceptFriendRequest(int sender_id, int reciver_id)
         {
             Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
             if (FriendRequest == null)
             {
-                return new { message = "Friend request doesn't exists." };
+                return new FriendRequestResponseDto { Success = false, Message = "Friend request doesn't exists." };
             }
 
             if (FriendRequest.Status != FriendRequestStatus.Pending)
             {
-                return new { message = "Friend request is not in a pending state." };
+                return new FriendRequestResponseDto { Success = false, Message = "Friend request is not in a pending state." };
             }
 
             FriendRequest.Status = FriendRequestStatus.Accepted;
             _context.SaveChanges();
-            return new { message = "Accepted friend request." };
+            return new FriendRequestResponseDto { Success = true, Message = "Accepted friend request." };
         }
 
-        public object RejectFriendRequest(int sender_id, int reciver_id)
+        public FriendRequestResponseDto RejectFriendRequest(int sender_id, int reciver_id)
         {
             Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
             if (FriendRequest == null)
             {
-                return new { message = "Friend request doesn't exists." };
+                return new FriendRequestResponseDto { Success = false, Message = "Friend request doesn't exists." };
             }
 
             if (FriendRequest.Status != FriendRequestStatus.Pending)
             {
-                return new { message = "Friend request is not in a pending state." };
+                return new FriendRequestResponseDto { Success = false, Message = "Friend request is not in a pending state." };
             }
 
             FriendRequest.Status = FriendRequestStatus.Rejected;
             _context.SaveChanges();
-            return new { message = "Rejected friend request." };
+            return new FriendRequestResponseDto { Success = true, Message = "Rejected friend request." };
         }
     }
 }
