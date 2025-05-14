@@ -60,5 +60,15 @@ namespace InstagramProjectBack.Services
             user.TokenExpiryDate = DateTime.UtcNow.AddSeconds(20);
             return user.Token;
         }
+
+        public int GetUserIdFromHttpContext(HttpContext httpContext)
+        {
+            var userIdClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (userIdClaim == null)
+                throw new UnauthorizedAccessException("User ID not found in token");
+
+            return int.Parse(userIdClaim.Value);
+        }
     }
 }

@@ -5,7 +5,7 @@ using InstagramProjectBack.Services;
 
 namespace InstagramProjectBack.Repositories
 {
-    public class FriendRequestRepository
+    public class FriendRequestRepository : IFriendRequestRepository
     {
         private readonly AppDbContext _context;
         private readonly TokenService _tokenService;
@@ -27,7 +27,8 @@ namespace InstagramProjectBack.Repositories
             {
                 Sender_Id = sender_id,
                 Reciver_Id = reciver_id,
-                Status = FriendRequestStatus.Pending
+                Status = FriendRequestStatus.Pending,
+                CreatedAt = DateTime.UtcNow
             };
             _context.Friend_Requests.Add(NewFriendRequest);
             _context.SaveChanges();

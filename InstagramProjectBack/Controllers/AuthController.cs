@@ -1,6 +1,5 @@
 ﻿using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Repositories;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstagramProjectBack.Controllers
