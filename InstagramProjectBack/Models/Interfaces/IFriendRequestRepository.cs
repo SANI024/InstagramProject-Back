@@ -1,4 +1,3 @@
-using InstagramProjectBack.Models;
 
 public interface IFriendRequestRepository
 {
