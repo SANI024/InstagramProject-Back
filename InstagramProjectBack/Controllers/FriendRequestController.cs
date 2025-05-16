@@ -1,7 +1,7 @@
-
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Mvc;
+
 namespace InstagramProjectBack.Controllers
 {
     [Route("api/[controller]")]
@@ -16,52 +16,83 @@ namespace InstagramProjectBack.Controllers
             _friendRequestRepository = friendRequestRepository;
             _tokenService = tokenService;
         }
+
         [HttpPost("send")]
         public IActionResult SendFriendRequest([FromBody] SendFriendRequestDto dto)
         {
-            int sender_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            BaseResponseDto<Friend_Request> result = _friendRequestRepository.SendFriendRequest(sender_id, dto.Reciver_Id);
-            if (result.Success == false)
+            try
             {
-                return BadRequest(new { Message = result.Message });
+                int sender_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                BaseResponseDto<Friend_Request> result = _friendRequestRepository.SendFriendRequest(sender_id, dto.Reciver_Id);
+                if (!result.Success)
+                {
+                    return BadRequest(new { Message = result.Message });
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
+
         [HttpGet("GetFriendRequests")]
         public IActionResult GetFriendRequests()
         {
-            int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            BaseResponseDto<List<Friend_Request>> FriendRequests = _friendRequestRepository.GetFriendRequestsByReciverId(reciver_id);
-            if (FriendRequests.Success == false)
+            try
             {
-                return NotFound(new { Message = FriendRequests.Message });
+                int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                BaseResponseDto<List<Friend_Request>> FriendRequests = _friendRequestRepository.GetFriendRequestsByReciverId(reciver_id);
+                if (!FriendRequests.Success)
+                {
+                    return NotFound(new { Message = FriendRequests.Message });
+                }
+                return Ok(new { FriendRequestsList = FriendRequests.Data });
             }
-            return Ok(new { FriendRequestsList = FriendRequests.Data });
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
+
         [HttpPatch("AcceptFriendRequest")]
         public IActionResult AcceptFriendRequest([FromBody] AcceptFriendRequestDto dto)
         {
-            int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            int sender_id = dto.Sender_Id;
-            BaseResponseDto<Friend_Request> result = _friendRequestRepository.AcceptFriendRequest(sender_id, reciver_id);
-            if (result.Success == false)
+            try
             {
-                return BadRequest(new { result.Message });
+                int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                int sender_id = dto.Sender_Id;
+                BaseResponseDto<Friend_Request> result = _friendRequestRepository.AcceptFriendRequest(sender_id, reciver_id);
+                if (!result.Success)
+                {
+                    return BadRequest(new { result.Message });
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
 
         [HttpPatch("RejectFriendRequest")]
         public IActionResult RejectFriendRequest([FromBody] RejectFriendRequestDto dto)
         {
-            int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            int sender_id = dto.Sender_Id;
-            BaseResponseDto<Friend_Request> result = _friendRequestRepository.RejectFriendRequest(sender_id, reciver_id);
-            if (result.Success == false)
+            try
             {
-                return BadRequest(new { result.Message });
+                int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                int sender_id = dto.Sender_Id;
+                BaseResponseDto<Friend_Request> result = _friendRequestRepository.RejectFriendRequest(sender_id, reciver_id);
+                if (!result.Success)
+                {
+                    return BadRequest(new { result.Message });
+                }
+                return Ok(result);
             }
-            return Ok(result);
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
         }
     }
 }
