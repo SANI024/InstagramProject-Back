@@ -1,8 +1,10 @@
 namespace InstagramProjectBack.Models.Dto
 {
-    public class PostResponseDto
+    public class PostResponseDto<T>
     {
-        Post? post { get; set; }
-        string Message { get; set; } = string.Empty;
+        public bool Success { get; set; } = true;
+        public T? Data { get; set; }
+        public string Message { get; set; } = string.Empty;
+
     }
 }

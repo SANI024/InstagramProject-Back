@@ -1,12 +1,15 @@
+using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 
 namespace InstagramProjectBack.Repositories
 {
     public interface IPostRepository
     {
-        PostResponseDto CreatePost(CreatePostDto createPostDto);
-        PostResponseDto UpdatePost(int PostId);
-        PostResponseDto GetPosts();
-        PostResponseDto RemovePost(int PostId);
+        PostResponseDto<Post> CreatePost(CreatePostDto createPostDto);
+        PostResponseDto<Post> UpdatePost(UpdatePostDto updatePostDto);
+        PostResponseDto<List<Post>> GetPosts();
+        PostResponseDto<Post> RemovePost(int PostId, int UserId);
     }
+
+
 }
