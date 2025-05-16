@@ -1,6 +1,7 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
+using Microsoft.EntityFrameworkCore;
 
 namespace InstagramProjectBack.Repositories
 {
@@ -58,7 +59,7 @@ namespace InstagramProjectBack.Repositories
 
         public BaseResponseDto<List<Post>> GetPosts()
         {
-            List<Post> postList = _context.Posts.ToList();
+            List<Post> postList = _context.Posts.Include(p => p.User).ToList();
             if (postList.Count == 0)
             {
                 return new BaseResponseDto<List<Post>>
