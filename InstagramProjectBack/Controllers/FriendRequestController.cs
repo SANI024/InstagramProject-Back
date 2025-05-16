@@ -1,9 +1,11 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace InstagramProjectBack.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class FriendRequestController : ControllerBase
