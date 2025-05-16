@@ -1,10 +1,11 @@
-﻿using InstagramProjectBack.Models.Dto;
+﻿using InstagramProjectBack.Models;
+using InstagramProjectBack.Models.Dto;
 
 namespace InstagramProjectBack.Repositories
 {
     public interface IAuthService
     {
-        AuthResponceDto Register(UserRegisterDto dto);
-        AuthResponceDto Login(UserLoginDto dto);
+        BaseResponseDto<string> Register(UserRegisterDto dto);
+        BaseResponseDto<string> Login(UserLoginDto dto);
     }
 }
