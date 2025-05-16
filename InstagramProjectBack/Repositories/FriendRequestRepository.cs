@@ -8,78 +8,104 @@ namespace InstagramProjectBack.Repositories
     public class FriendRequestRepository : IFriendRequestRepository
     {
         private readonly AppDbContext _context;
-        private readonly TokenService _tokenService;
 
         public FriendRequestRepository(AppDbContext context, TokenService tokenService)
         {
             _context = context;
-            _tokenService = tokenService;
         }
 
-        public FriendRequestResponseDto SendFriendRequest(int sender_id, int reciver_id)
+        public BaseResponseDto<Friend_Request> SendFriendRequest(int sender_id, int reciver_id)
         {
-            Friend_Request FriendRequestExists = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
-            if (FriendRequestExists != null)
+            try
             {
-                return new FriendRequestResponseDto { Success = false, Message = "Friend request already sent." };
+                Friend_Request FriendRequestExists = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
+                if (FriendRequestExists != null)
+                {
+                    return new BaseResponseDto<Friend_Request> { Success = false, Message = "Friend request already sent.", Data = null };
+                }
+                Friend_Request NewFriendRequest = new Friend_Request
+                {
+                    Sender_Id = sender_id,
+                    Reciver_Id = reciver_id,
+                    Status = FriendRequestStatus.Pending,
+                    CreatedAt = DateTime.UtcNow
+                };
+                _context.Friend_Requests.Add(NewFriendRequest);
+                _context.SaveChanges();
+                return new BaseResponseDto<Friend_Request> { Success = true, Message = "Friend request sent successfully.", Data = NewFriendRequest };
             }
-            Friend_Request NewFriendRequest = new Friend_Request
+            catch (Exception ex)
             {
-                Sender_Id = sender_id,
-                Reciver_Id = reciver_id,
-                Status = FriendRequestStatus.Pending,
-                CreatedAt = DateTime.UtcNow
-            };
-            _context.Friend_Requests.Add(NewFriendRequest);
-            _context.SaveChanges();
-            return new FriendRequestResponseDto { Success = true, Message = "Friend request sent successfully." };
+                return new BaseResponseDto<Friend_Request> { Success = false, Message = $"An error occurred: {ex.Message}", Data = null };
+            }
         }
-        public FriendRequestResponseDto GetFriendRequestsByReciverId(int reciver_id)
+        public BaseResponseDto<List<Friend_Request>> GetFriendRequestsByReciverId(int reciver_id)
         {
-            List<Friend_Request> FriendRequests = _context.Friend_Requests
+            try
+            {
+                List<Friend_Request> FriendRequests = _context.Friend_Requests
             .Where(fr => fr.Reciver_Id == reciver_id && fr.Status == FriendRequestStatus.Pending).ToList();
-            if (FriendRequests.Count == 0)
-            {
-                return new FriendRequestResponseDto { Success = false, Message = "No requests." };
+                if (FriendRequests.Count == 0)
+                {
+                    return new BaseResponseDto<List<Friend_Request>> { Success = false, Message = "No requests.", Data = null };
+                }
+                return new BaseResponseDto<List<Friend_Request>> { Success = true, Message = "Succesfully fetched friend requests.", Data = FriendRequests };
             }
-            return new FriendRequestResponseDto { Success = true, Friend_Requests = FriendRequests };
+            catch (Exception ex)
+            {
+                return new BaseResponseDto<List<Friend_Request>> { Success = false, Message = $"An error occurred: {ex.Message}", Data = null };
+            }
         }
 
 
-        public FriendRequestResponseDto AcceptFriendRequest(int sender_id, int reciver_id)
+        public BaseResponseDto<Friend_Request> AcceptFriendRequest(int sender_id, int reciver_id)
         {
-            Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
-            if (FriendRequest == null)
+            try
             {
-                return new FriendRequestResponseDto { Success = false, Message = "Friend request doesn't exists." };
-            }
+                Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
+                if (FriendRequest == null)
+                {
+                    return new BaseResponseDto<Friend_Request> { Success = false, Message = "Friend request doesn't exists.", Data = null };
+                }
 
-            if (FriendRequest.Status != FriendRequestStatus.Pending)
+                if (FriendRequest.Status != FriendRequestStatus.Pending)
+                {
+                    return new BaseResponseDto<Friend_Request> { Success = false, Message = "Friend request is not in a pending state.", Data = null };
+                }
+
+                FriendRequest.Status = FriendRequestStatus.Accepted;
+                _context.SaveChanges();
+                return new BaseResponseDto<Friend_Request> { Success = true, Message = "Accepted friend request.", Data = FriendRequest };
+            }
+            catch (Exception ex)
             {
-                return new FriendRequestResponseDto { Success = false, Message = "Friend request is not in a pending state." };
+                return new BaseResponseDto<Friend_Request> { Success = false, Message = $"An error occurred: {ex.Message}", Data = null };
             }
-
-            FriendRequest.Status = FriendRequestStatus.Accepted;
-            _context.SaveChanges();
-            return new FriendRequestResponseDto { Success = true, Message = "Accepted friend request." };
         }
 
-        public FriendRequestResponseDto RejectFriendRequest(int sender_id, int reciver_id)
+        public BaseResponseDto<Friend_Request> RejectFriendRequest(int sender_id, int reciver_id)
         {
-            Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
-            if (FriendRequest == null)
+            try
             {
-                return new FriendRequestResponseDto { Success = false, Message = "Friend request doesn't exists." };
-            }
+                Friend_Request FriendRequest = _context.Friend_Requests.FirstOrDefault(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
+                if (FriendRequest == null)
+                {
+                    return new BaseResponseDto<Friend_Request> { Success = false, Message = "Friend request doesn't exists.", Data = null };
+                }
 
-            if (FriendRequest.Status != FriendRequestStatus.Pending)
+                if (FriendRequest.Status != FriendRequestStatus.Pending)
+                {
+                    return new BaseResponseDto<Friend_Request> { Success = false, Message = "Friend request is not in a pending state.", Data = null };
+                }
+
+                FriendRequest.Status = FriendRequestStatus.Rejected;
+                _context.SaveChanges();
+                return new BaseResponseDto<Friend_Request> { Success = true, Message = "Rejected friend request.", Data = FriendRequest };
+            }
+            catch (Exception ex)
             {
-                return new FriendRequestResponseDto { Success = false, Message = "Friend request is not in a pending state." };
+                return new BaseResponseDto<Friend_Request> { Success = false, Message = $"An error occurred: {ex.Message}", Data = null };
             }
-
-            FriendRequest.Status = FriendRequestStatus.Rejected;
-            _context.SaveChanges();
-            return new FriendRequestResponseDto { Success = true, Message = "Rejected friend request." };
         }
     }
 }

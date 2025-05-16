@@ -11,14 +11,14 @@ namespace InstagramProjectBack.Repositories
         {
             _context = context;
         }
-        public PostResponseDto<Post> CreatePost(CreatePostDto createPostDto)
+        public BaseResponseDto<Post> CreatePost(CreatePostDto createPostDto)
         {
             try
             {
                 User userExists = _context.Users.FirstOrDefault(u => u.Id == createPostDto.UserId);
                 if (userExists == null)
                 {
-                    return new PostResponseDto<Post>
+                    return new BaseResponseDto<Post>
                     {
                         Success = false,
                         Data = null,
@@ -28,7 +28,7 @@ namespace InstagramProjectBack.Repositories
 
                 if (string.IsNullOrWhiteSpace(createPostDto.Description))
                 {
-                    return new PostResponseDto<Post>
+                    return new BaseResponseDto<Post>
                     {
                         Success = false,
                         Data = null,
@@ -48,7 +48,7 @@ namespace InstagramProjectBack.Repositories
                 _context.Posts.Add(newPost);
                 _context.SaveChanges();
 
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = true,
                     Data = newPost,
@@ -57,7 +57,7 @@ namespace InstagramProjectBack.Repositories
             }
             catch (Exception ex)
             {
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = false,
                     Data = null,
@@ -67,14 +67,14 @@ namespace InstagramProjectBack.Repositories
         }
 
 
-        PostResponseDto<List<Post>> IPostRepository.GetPosts()
+        BaseResponseDto<List<Post>> IPostRepository.GetPosts()
         {
             try
             {
                 List<Post> PostList = _context.Posts.ToList();
                 if (PostList.Count == 0)
                 {
-                    return new PostResponseDto<List<Post>>
+                    return new BaseResponseDto<List<Post>>
                     {
                         Success = false,
                         Data = null,
@@ -82,7 +82,7 @@ namespace InstagramProjectBack.Repositories
                     };
                 }
 
-                return new PostResponseDto<List<Post>>
+                return new BaseResponseDto<List<Post>>
                 {
                     Success = true,
                     Data = PostList,
@@ -92,7 +92,7 @@ namespace InstagramProjectBack.Repositories
             catch (Exception ex)
             {
 
-                return new PostResponseDto<List<Post>>
+                return new BaseResponseDto<List<Post>>
                 {
                     Success = false,
                     Data = null,
@@ -101,14 +101,14 @@ namespace InstagramProjectBack.Repositories
             }
         }
 
-        PostResponseDto<Post> IPostRepository.RemovePost(int PostId, int UserId)
+        BaseResponseDto<Post> IPostRepository.RemovePost(int PostId, int UserId)
         {
             try
             {
                 Post PostExists = _context.Posts.FirstOrDefault(p => p.Id == PostId && p.UserId == UserId);
                 if (PostExists == null)
                 {
-                    return new PostResponseDto<Post>
+                    return new BaseResponseDto<Post>
                     {
                         Success = false,
                         Data = null,
@@ -117,7 +117,7 @@ namespace InstagramProjectBack.Repositories
                 }
                 _context.Posts.Remove(PostExists);
                 _context.SaveChanges();
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = true,
                     Data = PostExists,
@@ -127,7 +127,7 @@ namespace InstagramProjectBack.Repositories
             catch (Exception ex)
             {
 
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = false,
                     Data = null,
@@ -136,14 +136,14 @@ namespace InstagramProjectBack.Repositories
             }
         }
 
-        PostResponseDto<Post> IPostRepository.UpdatePost(UpdatePostDto updatePostDto)
+        BaseResponseDto<Post> IPostRepository.UpdatePost(UpdatePostDto updatePostDto)
         {
             try
             {
                 Post PostExists = _context.Posts.FirstOrDefault(p => p.Id == updatePostDto.PostId && p.UserId == updatePostDto.UserId);
                 if (PostExists == null)
                 {
-                    return new PostResponseDto<Post>
+                    return new BaseResponseDto<Post>
                     {
                         Success = false,
                         Data = null,
@@ -163,7 +163,7 @@ namespace InstagramProjectBack.Repositories
                     PostExists.Description = updatePostDto.Description;
                 }
                 _context.SaveChanges();
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = true,
                     Data = PostExists,
@@ -174,7 +174,7 @@ namespace InstagramProjectBack.Repositories
             catch (Exception ex)
             {
 
-                return new PostResponseDto<Post>
+                return new BaseResponseDto<Post>
                 {
                     Success = false,
                     Data = null,

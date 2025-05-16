@@ -5,10 +5,10 @@ namespace InstagramProjectBack.Repositories
 {
     public interface IPostRepository
     {
-        PostResponseDto<Post> CreatePost(CreatePostDto createPostDto);
-        PostResponseDto<Post> UpdatePost(UpdatePostDto updatePostDto);
-        PostResponseDto<List<Post>> GetPosts();
-        PostResponseDto<Post> RemovePost(int PostId, int UserId);
+        BaseResponseDto<Post> CreatePost(CreatePostDto createPostDto);
+        BaseResponseDto<Post> UpdatePost(UpdatePostDto updatePostDto);
+        BaseResponseDto<List<Post>> GetPosts();
+        BaseResponseDto<Post> RemovePost(int PostId, int UserId);
     }
 
 

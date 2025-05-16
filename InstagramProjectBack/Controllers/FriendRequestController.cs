@@ -20,7 +20,7 @@ namespace InstagramProjectBack.Controllers
         public IActionResult SendFriendRequest([FromBody] SendFriendRequestDto dto)
         {
             int sender_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            FriendRequestResponseDto result = _friendRequestRepository.SendFriendRequest(sender_id, dto.Reciver_Id);
+            BaseResponseDto<Friend_Request> result = _friendRequestRepository.SendFriendRequest(sender_id, dto.Reciver_Id);
             if (result.Success == false)
             {
                 return BadRequest(new { Message = result.Message });
@@ -31,19 +31,19 @@ namespace InstagramProjectBack.Controllers
         public IActionResult GetFriendRequests()
         {
             int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
-            FriendRequestResponseDto FriendRequests = _friendRequestRepository.GetFriendRequestsByReciverId(reciver_id);
+            BaseResponseDto<List<Friend_Request>> FriendRequests = _friendRequestRepository.GetFriendRequestsByReciverId(reciver_id);
             if (FriendRequests.Success == false)
             {
                 return NotFound(new { Message = FriendRequests.Message });
             }
-            return Ok(new { FriendRequestsList = FriendRequests.Friend_Requests });
+            return Ok(new { FriendRequestsList = FriendRequests.Data });
         }
         [HttpPatch("AcceptFriendRequest")]
         public IActionResult AcceptFriendRequest([FromBody] AcceptFriendRequestDto dto)
         {
             int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
             int sender_id = dto.Sender_Id;
-            FriendRequestResponseDto result = _friendRequestRepository.AcceptFriendRequest(sender_id, reciver_id);
+            BaseResponseDto<Friend_Request> result = _friendRequestRepository.AcceptFriendRequest(sender_id, reciver_id);
             if (result.Success == false)
             {
                 return BadRequest(new { result.Message });
@@ -56,7 +56,7 @@ namespace InstagramProjectBack.Controllers
         {
             int reciver_id = _tokenService.GetUserIdFromHttpContext(HttpContext);
             int sender_id = dto.Sender_Id;
-            FriendRequestResponseDto result = _friendRequestRepository.RejectFriendRequest(sender_id, reciver_id);
+            BaseResponseDto<Friend_Request> result = _friendRequestRepository.RejectFriendRequest(sender_id, reciver_id);
             if (result.Success == false)
             {
                 return BadRequest(new { result.Message });
