@@ -6,40 +6,31 @@ namespace InstagramProjectBack.Models
 {
     public class ChatHub : Hub
     {
-        private readonly IMessageRepository _messageRepository;
-        private readonly FriendService _friendService;
-        public ChatHub(IMessageRepository messageRepository, FriendService friendService)
+        private readonly MessageService _messageService;
+
+        public ChatHub(MessageService messageService)
         {
-            _messageRepository = messageRepository;
-            _friendService = friendService;
+            _messageService = messageService;
         }
-        public async Task SendMessage(string SenderId, string ReciverId, string Message)
+
+        public async Task SendMessage(string senderId, string receiverId, string message)
         {
-            if (string.IsNullOrWhiteSpace(Message))
+            if (!int.TryParse(senderId, out int senderIntId) || !int.TryParse(receiverId, out int receiverIntId))
             {
-                await Clients.Caller.SendAsync("MessageFailed", "Message cannot be empty.");
-                return;
-            }
-            if (!int.TryParse(SenderId, out int senderIntId) || !int.TryParse(ReciverId, out int reciverIntId))
-            {
-                await Clients.Caller.SendAsync("MessageFailed", $"Problem on id parsing.");
-                return;
-            }
-            bool AreFriends = _friendService.AreFriends(senderIntId, reciverIntId);
-            if (AreFriends == false)
-            {
-                await Clients.Caller.SendAsync("MessageFailed", "You are not friends.");
+                await Clients.Caller.SendAsync("MessageFailed", "Invalid IDs.");
                 return;
             }
 
-            BaseResponseDto<Message> SentMessage = _messageRepository.SendMessage(senderIntId, reciverIntId, Message);
-            if (SentMessage.Success == false)
+            var result = await _messageService.ProcessMessageAsync(senderIntId, receiverIntId, message);
+            if (!result.Success)
             {
-                await Clients.Caller.SendAsync("MessageFailed", $"{SentMessage.Message}");
+                await Clients.Caller.SendAsync("MessageFailed", result.Message);
                 return;
             }
-            await Clients.User(ReciverId).SendAsync("ReceiveMessage", SenderId, Message);
-            await Clients.User(SenderId).SendAsync("MessageSent", Message);
+
+            await Clients.User(receiverId).SendAsync("ReceiveMessage", senderId, message);
+            await Clients.User(senderId).SendAsync("MessageSent", message);
         }
     }
+
 }

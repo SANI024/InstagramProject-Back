@@ -19,7 +19,8 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
     });
 builder.Services.AddSingleton<TokenService>();
-builder.Services.AddSingleton<FriendService>();
+builder.Services.AddScoped<FriendService>();
+builder.Services.AddScoped<MessageService>();
 builder.Services.AddSingleton<IUserIdProvider, CustomUserIdProvider>();
 builder.Services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
 builder.Services.AddScoped<IAuthService, AuthServiceRepository>();
