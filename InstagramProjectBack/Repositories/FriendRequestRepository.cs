@@ -1,5 +1,6 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
+using InstagramProjectBack.Models.Dto;
 
 namespace InstagramProjectBack.Repositories
 {

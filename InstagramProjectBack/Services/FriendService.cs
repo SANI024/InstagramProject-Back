@@ -1,4 +1,5 @@
 using InstagramProjectBack.Data;
+using InstagramProjectBack.Models.Dto;
 namespace InstagramProjectBack.Services
 {
     public class FriendService
