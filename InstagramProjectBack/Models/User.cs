@@ -7,7 +7,6 @@
         public string Email { get; set; } = string.Empty;
         public string? PofileImage { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
-        public string? Token { get; set; }
         public DateTime TokenExpiryDate { get; set; }
     }
 }
