@@ -1,5 +1,6 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Repositories;
+using Microsoft.AspNetCore.SignalR;
 
 namespace InstagramProjectBack.Services
 {
@@ -29,6 +30,7 @@ namespace InstagramProjectBack.Services
             return _messageRepository.SendMessage(senderId, receiverId, message);
         }
 
-    }
+    };
+
 
 }
