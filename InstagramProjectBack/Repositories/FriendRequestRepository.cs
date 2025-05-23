@@ -1,6 +1,6 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
-using InstagramProjectBack.Services;
+using InstagramProjectBack.Models.Dto;
 
 namespace InstagramProjectBack.Repositories
 {
@@ -8,7 +8,7 @@ namespace InstagramProjectBack.Repositories
     {
         private readonly AppDbContext _context;
 
-        public FriendRequestRepository(AppDbContext context, TokenService tokenService)
+        public FriendRequestRepository(AppDbContext context)
         {
             _context = context;
         }

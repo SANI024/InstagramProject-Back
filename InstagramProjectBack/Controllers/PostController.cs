@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace InstagramProjectBack.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
 
@@ -21,6 +20,7 @@ namespace InstagramProjectBack.Controllers
             _tokenService = tokenService;
         }
 
+        [Authorize]
         [HttpPost("CreatePost")]
         public IActionResult CreatePost([FromBody] CreatePostDto dto)
         {
@@ -58,7 +58,7 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-
+        [Authorize]
         [HttpDelete("RemovePost")]
         public IActionResult RemovePost([FromBody] int PostId)
         {
@@ -78,7 +78,7 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-
+        [Authorize]
         [HttpPatch("UpdatePost")]
         public IActionResult UpdatePost(UpdatePostDto dto)
         {

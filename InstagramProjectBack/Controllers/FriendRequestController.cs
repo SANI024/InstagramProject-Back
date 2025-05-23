@@ -1,4 +1,5 @@
 using InstagramProjectBack.Models;
+using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
