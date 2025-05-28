@@ -64,13 +64,13 @@ namespace InstagramProjectBack.Controllers
         }
         [Authorize]
         [HttpDelete("remove postlike")]
-        public IActionResult Delete([FromBody] PostLike exsLike )
+        public IActionResult Delete([FromBody] PostDislikeRequestDto dto )
         {
             try
             {
                 int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                exsLike.UserId = UserId;
-                BaseResponseDto<PostLike> result = _postLikeRepository.DeletePostLike(exsLike);
+                dto.UserId = UserId;
+                BaseResponseDto<PostLike> result = _postLikeRepository.DeletePostLike(dto);
                 if (result.Success == false)
                 {
                     return BadRequest(new { Message = result.Message });

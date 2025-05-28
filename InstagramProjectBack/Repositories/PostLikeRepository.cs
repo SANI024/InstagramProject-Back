@@ -25,6 +25,17 @@ namespace InstagramProjectBack.Repositories
                     Message = "User was not found."
                 };
             }
+
+            var existingLike = _context.PostLikes.FirstOrDefault(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
+            if (existingLike != null)
+            {
+               return new BaseResponseDto<PostLike>
+               {
+                 Success = false,
+                 Data = existingLike,
+                 Message = "User already liked this post."
+               };
+            }
             PostLike NewPostLike = new PostLike
             {
                 PostId = dto.PostId,
@@ -43,12 +54,10 @@ namespace InstagramProjectBack.Repositories
 
         }
 
-        public BaseResponseDto<PostLike> DeletePostLike(PostLike postLike)
+        public BaseResponseDto<PostLike> DeletePostLike(PostDislikeRequestDto dto)
         {
-            User userExists = _context.Users.FirstOrDefault(u => u.Id == postLike.UserId);
-            PostLike existing = _context.PostLikes.FirstOrDefault(pl => pl.Id == postLike.Id);
-
-
+            User userExists = _context.Users.FirstOrDefault(u => u.Id == dto.UserId);
+            PostLike existing = _context.PostLikes.FirstOrDefault(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
             if (existing == null )
             {
                 return new BaseResponseDto<PostLike> 
@@ -83,10 +92,7 @@ namespace InstagramProjectBack.Repositories
 
         public BaseResponseDto<List<PostLike>> GetAllPostLikes()
         {
-            List<PostLike> likes = _context.PostLikes
-            .Include(ps => ps.User)
-            .Include(ps => ps.Post)
-            .ToList();
+            List<PostLike> likes = _context.PostLikes.ToList();
 
             if (likes.Count == 0)
             {

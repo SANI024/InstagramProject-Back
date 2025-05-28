@@ -6,7 +6,7 @@ namespace InstagramProjectBack.Models.Interfaces
     {
         BaseResponseDto<List<PostLike>> GetAllPostLikes();
         BaseResponseDto<PostLike> CreatePostLike(PostLikeRequestDto dto);
-        BaseResponseDto<PostLike> DeletePostLike(PostLike postLike);
+        BaseResponseDto<PostLike> DeletePostLike(PostDislikeRequestDto dto);
        
     }
 }
