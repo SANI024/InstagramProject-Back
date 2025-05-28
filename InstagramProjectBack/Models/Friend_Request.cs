@@ -1,3 +1,5 @@
+using InstagramProjectBack.Models.Dto;
+
 namespace InstagramProjectBack.Models
 {
     public class Friend_Request

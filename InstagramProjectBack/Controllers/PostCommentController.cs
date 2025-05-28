@@ -1,5 +1,6 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
+using InstagramProjectBack.Models.Interfaces;
 using InstagramProjectBack.Repositories;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -9,31 +10,32 @@ namespace InstagramProjectBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
-    public class PostController : ControllerBase
+    public class PostCommentController : ControllerBase
     {
-        private readonly IPostRepository _postRepository;
+        private readonly IPostCommentRepository _postCommentRepository;
         private readonly TokenService _tokenService;
-        public PostController(IPostRepository postRepository, TokenService tokenService)
+        public PostCommentController(IPostCommentRepository postCommentRepository, TokenService tokenService)
         {
-            _postRepository = postRepository;
+            _postCommentRepository = postCommentRepository;
             _tokenService = tokenService;
         }
 
         [Authorize]
-        [HttpPost("CreatePost")]
-        public IActionResult CreatePost([FromBody] CreatePostDto dto)
+        [HttpPost("CreatePostComment")]
+        public IActionResult CreatePost([FromBody] CreatePostCommentDto dto)
         {
             try
             {
                 int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = UserId;
-                BaseResponseDto<Post> result = _postRepository.CreatePost(dto);
+                BaseResponseDto<PostComment> result = _postCommentRepository.CreatePostComment(dto);
                 if (result.Success == false)
                 {
                     return BadRequest(new { Message = result.Message });
                 }
+
                 return Ok(result);
+
             }
             catch (Exception ex)
             {
@@ -41,16 +43,18 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [HttpGet("GetPosts")]
-        public IActionResult GetPosts()
+        [Authorize]
+        [HttpGet("get all postComments")]
+        public IActionResult GetAllPostComments()
         {
             try
             {
-                BaseResponseDto<List<Post>> result = _postRepository.GetPosts();
+                BaseResponseDto<List<PostComment>> result = _postCommentRepository.GetPostComments();
                 if (result.Success == false)
                 {
                     return BadRequest(new { Message = result.Message });
                 }
+
                 return Ok(result.Data);
             }
             catch (Exception ex)
@@ -58,14 +62,15 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+
         [Authorize]
-        [HttpDelete("RemovePost")]
-        public IActionResult RemovePost([FromBody] RemovePostRequestDto dto)
+        [HttpDelete("remove post comment")]
+        public IActionResult DeletePostaComment( [FromBody]  int PostId)
         {
             try
             {
                 int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                BaseResponseDto<Post> result = _postRepository.RemovePost(dto.PostId, UserId);
+                BaseResponseDto<PostComment> result = _postCommentRepository.RemovePostComment(UserId,PostId);
                 if (result.Success == false)
                 {
                     return BadRequest(new { Message = result.Message });
@@ -74,32 +79,37 @@ namespace InstagramProjectBack.Controllers
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
+
+
         }
+
         [Authorize]
-        [HttpPatch("UpdatePost")]
-        public IActionResult UpdatePost(UpdatePostDto dto)
+        [HttpPut("update post comment") ]
+        public IActionResult UpdatePostComment([FromBody] UpdatePostCommentDto dto)
         {
             try
             {
                 int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = UserId;
-                BaseResponseDto<Post> result = _postRepository.UpdatePost(dto);
+                BaseResponseDto<PostComment> result = _postCommentRepository.UpdatePostComment(dto);
                 if (result.Success == false)
                 {
                     return BadRequest(new { Message = result.Message });
                 }
-                return Ok(result.Data);
+
+                return Ok(result);
+
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
-        }
 
+
+
+        }
 
     }
 }

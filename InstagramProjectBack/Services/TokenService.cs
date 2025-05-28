@@ -51,15 +51,6 @@ namespace InstagramProjectBack.Services
 
             return token;
         }
-        public string ValidateToken(User user)
-        {
-            if (user.Token == null || user.TokenExpiryDate < DateTime.UtcNow)
-            {
-                return null;
-            }
-            user.TokenExpiryDate = DateTime.UtcNow.AddSeconds(20);
-            return user.Token;
-        }
 
         public int GetUserIdFromHttpContext(HttpContext httpContext)
         {
