@@ -75,7 +75,7 @@ namespace InstagramProjectBack.Controllers
                 {
                     return BadRequest(new { Message = result.Message });
                 }
-                return Ok(result.Data);
+                return Ok(result.Message);
             }
             catch (Exception ex)
             {

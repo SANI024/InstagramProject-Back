@@ -90,13 +90,13 @@ namespace InstagramProjectBack.Repositories
 
         public BaseResponseDto<PostComment> UpdatePostComment(UpdatePostCommentDto dto)
         {
-            PostComment postComment = _context.PostComments.FirstOrDefault(pc => pc.UserId == dto.UserId && pc.PostId == dto.PostId);
+            PostComment postComment = _context.PostComments.FirstOrDefault(pc => pc.UserId == dto.UserId && pc.Id == dto.CommentId);
             if (postComment == null)
             {
                 return new BaseResponseDto<PostComment>
                 {
                     Success = false,
-                    Message = "Comment not found.",
+                    Message = "Can not update the comment.",
                     Data = null
                 };
             }
