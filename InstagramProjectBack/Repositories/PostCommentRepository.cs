@@ -59,7 +59,7 @@ namespace InstagramProjectBack.Repositories
             return new BaseResponseDto<List<PostComment>>
             {
                 Data = postComments,
-                Message = "Succesfully Created PostComment.",
+                Message = "Succesfully Retrived PostComments.",
                 Success = true
             };
         }

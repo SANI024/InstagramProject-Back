@@ -21,9 +21,9 @@ namespace InstagramProjectBack.Repositories
 
         public BaseResponseDto<string> Register(UserRegisterDto dto)
         {
-            var existingUser = _context.Users.FirstOrDefault(u => u.Name == dto.Name);
+            var existingUser = _context.Users.FirstOrDefault(u => u.Name == dto.Name || u.Email == dto.Email);
             if (existingUser != null)
-                throw new Exception("User already exists");
+                throw new Exception("User with provided name or email already exists");
 
             var user = new User
             {
@@ -35,13 +35,11 @@ namespace InstagramProjectBack.Repositories
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);
             _context.Users.Add(user);
             _context.SaveChanges();
-
-            var token = _tokenService.CreateToken(user);
             return new BaseResponseDto<string>
             {
                 Success = true,
                 Message = $"Token Expires At: {user.TokenExpiryDate}",
-                Data = token
+                Data = null
             };
         }
 
