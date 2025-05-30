@@ -10,7 +10,7 @@ namespace InstagramProjectBack.Services
         public VerificationService(IMemoryCache cache)
         {
             _cache = cache;
-            _cacheOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(30));
+            _cacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30));
         }
 
         public string GenerateVerifyToken()
@@ -25,8 +25,9 @@ namespace InstagramProjectBack.Services
 
         public bool CheckVerifyToken(string token, out string email)
         {
-            return _cache.TryGetValue(token, out email);
+          return _cache.TryGetValue(token, out email);
         }
+
         public void RemoveVerifyToken(string token)
         {
             _cache.Remove(token);

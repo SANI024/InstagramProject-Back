@@ -14,9 +14,11 @@ namespace InstagramProjectBack.Services
         {
             _emailSettings = settings.Value;
         }
-        public async Task SendEmail(string from, string to, string verificationLink)
+        public async Task SendEmail(string to,string token)
         {
+            string verificationLink = $"http://localhost:5150/api/Auth/verify?token={token}";
             var message = new MimeMessage();
+            string from = _emailSettings.Username;
             string fromName = from.Split("@")[0];
             string toName = to.Split("@")[0];
             message.From.Add(new MailboxAddress(fromName, from));
