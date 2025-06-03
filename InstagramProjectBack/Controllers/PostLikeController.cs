@@ -19,69 +19,65 @@ namespace InstagramProjectBack.Controllers
             _postLikeRepository = postRepository;
             _tokenService = tokenService;
         }
-        [HttpGet("get Postlikes")]
-        public IActionResult GetLikes()
+        [AllowAnonymous]
+        [HttpGet("get all post likes")]
+        public IActionResult GetAllPostLikes()
         {
             try
             {
-                BaseResponseDto<List<PostLike>> result = _postLikeRepository.GetAllPostLikes();
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                var result = _postLikeRepository.GetAllPostLikes();
+
+                if (!result.Success)
+                    return NotFound(new { result.Message });
 
                 return Ok(result.Data);
             }
-
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-
         [Authorize]
-        [HttpPost("create Postlike")]
+        [HttpPost("like post")]
         public IActionResult CreatePostLike([FromBody] PostLikeRequestDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<PostLike> result = _postLikeRepository.CreatePostLike(dto);
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
 
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                var result = _postLikeRepository.CreatePostLike(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
 
                 return Ok(result);
             }
-
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
         [Authorize]
-        [HttpDelete("remove postlike")]
-        public IActionResult Delete([FromBody] PostDislikeRequestDto dto )
+        [HttpDelete("unlike post")]
+        public IActionResult DeletePostLike([FromBody] PostDislikeRequestDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<PostLike> result = _postLikeRepository.DeletePostLike(dto);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
+
+                var result = _postLikeRepository.DeletePostLike(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+
                 return Ok(result);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
-                
         }
     }
 }

@@ -20,22 +20,20 @@ namespace InstagramProjectBack.Controllers
             _tokenService = tokenService;
         }
 
-        [Authorize]
-        [HttpPost("CreatePostComment")]
-        public IActionResult CreatePost([FromBody] CreatePostCommentDto dto)
+        [HttpPost("create post comments")]
+        public IActionResult CreatePostComment([FromBody] CreatePostCommentDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<PostComment> result = _postCommentRepository.CreatePostComment(dto);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
+
+                var result = _postCommentRepository.CreatePostComment(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
 
                 return Ok(result);
-
             }
             catch (Exception ex)
             {
@@ -43,17 +41,15 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [Authorize]
-        [HttpGet("get all postComments")]
+        [HttpGet("get all post comments")]
         public IActionResult GetAllPostComments()
         {
             try
             {
-                BaseResponseDto<List<PostComment>> result = _postCommentRepository.GetPostComments();
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                var result = _postCommentRepository.GetPostComments();
+
+                if (!result.Success)
+                    return NotFound(new { result.Message });
 
                 return Ok(result.Data);
             }
@@ -64,51 +60,45 @@ namespace InstagramProjectBack.Controllers
         }
 
         [Authorize]
-        [HttpDelete("remove post comment")]
-        public IActionResult DeletePostaComment( [FromBody]  int PostId)
+        [HttpDelete("delete post comments")]
+        public IActionResult DeletePostComment([FromBody] int postId)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                BaseResponseDto<PostComment> result = _postCommentRepository.RemovePostComment(UserId,PostId);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
-                return Ok(result.Message);
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = _postCommentRepository.RemovePostComment(userId, postId);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+
+                return Ok(new { result.Message });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
-
-
         }
 
         [Authorize]
-        [HttpPut("update post comment") ]
+        [HttpPut("update post comments")]
         public IActionResult UpdatePostComment([FromBody] UpdatePostCommentDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<PostComment> result = _postCommentRepository.UpdatePostComment(dto);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
+
+                var result = _postCommentRepository.UpdatePostComment(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
 
                 return Ok(result);
-
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
-
-
-
         }
 
     }

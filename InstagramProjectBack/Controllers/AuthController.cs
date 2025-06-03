@@ -21,11 +21,19 @@ namespace InstagramProjectBack.Controllers
             try
             {
                 var response = await _authService.Register(dto);
+
+                if (!response.Success)
+                {
+                    if (response.Message.Contains("already"))
+                        return Conflict(new { response.Message }); // 409 
+                    return BadRequest(new { response.Message }); // 400 
+                }
+
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
 
@@ -35,11 +43,15 @@ namespace InstagramProjectBack.Controllers
             try
             {
                 var response = _authService.Login(dto);
+
+                if (!response.Success)
+                    return Unauthorized(new { response.Message }); // 401 
+
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return Unauthorized(ex.Message);
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
 
@@ -49,33 +61,38 @@ namespace InstagramProjectBack.Controllers
             try
             {
                 var response = await _authService.ResendVerificationTokenAsync(email);
+
+                if (!response.Success)
+                {
+                    if (response.Message.Contains("not found"))
+                        return NotFound(new { response.Message }); // 404 
+                    return BadRequest(new { response.Message });
+                }
+
                 return Ok(response);
             }
             catch (Exception ex)
             {
-                return BadRequest(new { Message = ex.Message });
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
-
 
         [HttpGet("verify")]
         public IActionResult VerifyEmail([FromQuery] string token)
         {
             try
             {
-                bool UserVerification = _authService.VerifyUser(token);
-                if (UserVerification == false)
-                {
-                    return BadRequest(new { Message = "user verification failed." });
-                }
-                return Ok(new {Message = "User Verified Successfully!"});
+                bool isVerified = _authService.VerifyUser(token);
 
+                if (!isVerified)
+                    return BadRequest(new { Message = "User verification failed." });
+
+                return Ok(new { Message = "User verified successfully!" });
             }
             catch (Exception ex)
             {
-
-                return BadRequest(ex.Message);
-            }            
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
+            }
         }
 
     }

@@ -20,19 +20,19 @@ namespace InstagramProjectBack.Controllers
             _tokenService = tokenService;
         }
 
-        [Authorize]
-        [HttpPost("CreatePost")]
+        [HttpPost("create post")]
         public IActionResult CreatePost([FromBody] CreatePostDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<Post> result = _postRepository.CreatePost(dto);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
+
+                var result = _postRepository.CreatePost(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+
                 return Ok(result);
             }
             catch (Exception ex)
@@ -41,16 +41,17 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [HttpGet("GetPosts")]
+        [AllowAnonymous]
+        [HttpGet("get all posts")]
         public IActionResult GetPosts()
         {
             try
             {
-                BaseResponseDto<List<Post>> result = _postRepository.GetPosts();
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                var result = _postRepository.GetPosts();
+
+                if (!result.Success)
+                    return NotFound(new { result.Message });
+
                 return Ok(result.Data);
             }
             catch (Exception ex)
@@ -58,48 +59,45 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-        [Authorize]
-        [HttpDelete("RemovePost")]
+
+        [HttpDelete("delete post")]
         public IActionResult RemovePost([FromBody] RemovePostRequestDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                BaseResponseDto<Post> result = _postRepository.RemovePost(dto.PostId, UserId);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = _postRepository.RemovePost(dto.PostId, userId);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+
                 return Ok(result.Data);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-        [Authorize]
-        [HttpPatch("UpdatePost")]
-        public IActionResult UpdatePost(UpdatePostDto dto)
+
+        [HttpPatch("update post")]
+        public IActionResult UpdatePost([FromBody] UpdatePostDto dto)
         {
             try
             {
-                int UserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                dto.UserId = UserId;
-                BaseResponseDto<Post> result = _postRepository.UpdatePost(dto);
-                if (result.Success == false)
-                {
-                    return BadRequest(new { Message = result.Message });
-                }
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                dto.UserId = userId;
+
+                var result = _postRepository.UpdatePost(dto);
+
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+
                 return Ok(result.Data);
             }
             catch (Exception ex)
             {
-
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-
-
     }
 }
