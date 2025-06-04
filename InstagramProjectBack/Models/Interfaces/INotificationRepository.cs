@@ -5,7 +5,6 @@ namespace InstagramProjectBack.Models.Interfaces
 {
     public interface INotificationRepository
     {
-        BaseResponseDto<List<NotificationDto>> GetUserNotifications(int userId);
-
+        Task SendNotificationAsync( NotificationDto notification);
     }
 }

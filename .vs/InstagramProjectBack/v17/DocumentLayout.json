@@ -3,12 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\services\\friendrequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\services\\friendrequestservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\repositories\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\repositories\\notificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\interfaces\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\interfaces\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\requests\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\requests\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\signalr\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\signalr\\notificationhub.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\controllers\\postlikecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,24 +51,8 @@
       "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\controllers\\messagecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\controllers\\friendrequestcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\controllers\\authcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\interfaces\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\interfaces\\inotificationrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\requests\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\requests\\notificationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|solutionrelative:instagramprojectback\\models\\notification.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{48D16724-C5C9-4DF6-94D0-42E6CBFA6561}|InstagramProjectBack\\InstagramProjectBack.csproj|c:\\users\\pc\\desktop\\instagramproject-back\\instagramprojectback\\data\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -70,24 +74,50 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
+              "Title": "FriendRequestService.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Services\\FriendRequestService.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\Services\\FriendRequestService.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Services\\FriendRequestService.cs",
+              "RelativeToolTip": "InstagramProjectBack\\Services\\FriendRequestService.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAowEQAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T19:40:57.78Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NotificationHub.cs",
+              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\SignalR\\NotificationHub.cs",
+              "RelativeDocumentMoniker": "InstagramProjectBack\\SignalR\\NotificationHub.cs",
+              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\SignalR\\NotificationHub.cs",
+              "RelativeToolTip": "InstagramProjectBack\\SignalR\\NotificationHub.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-06-04T18:55:00.817Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
               "Title": "MessageController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\MessageController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\MessageController.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\MessageController.cs",
               "RelativeToolTip": "InstagramProjectBack\\Controllers\\MessageController.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAA5wC0AAAAgAAAAAAAAAA==",
+              "ViewState": "AgIAABYAAAAAAAAAAAAgwC0AAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T16:24:44.276Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 12,
               "Title": "AuthController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\AuthController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\AuthController.cs",
@@ -100,7 +130,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 10,
               "Title": "NotificationController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\NotificationController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\NotificationController.cs",
@@ -113,7 +143,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Data\\AppDbContext.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Data\\AppDbContext.cs",
@@ -132,53 +162,40 @@
               "RelativeDocumentMoniker": "InstagramProjectBack\\Repositories\\NotificationRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\NotificationRepository.cs",
               "RelativeToolTip": "InstagramProjectBack\\Repositories\\NotificationRepository.cs",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAQwBMAAAA2AAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAqwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T15:42:00.121Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "INotificationRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Interfaces\\INotificationRepository.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Interfaces\\INotificationRepository.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Interfaces\\INotificationRepository.cs",
               "RelativeToolTip": "InstagramProjectBack\\Models\\Interfaces\\INotificationRepository.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T15:40:00.738Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 3,
               "Title": "NotificationDto.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Requests\\NotificationDto.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Requests\\NotificationDto.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Requests\\NotificationDto.cs",
               "RelativeToolTip": "InstagramProjectBack\\Models\\Requests\\NotificationDto.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-06-03T15:37:22.293Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "Notification.cs",
-              "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Notification.cs",
-              "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Notification.cs",
-              "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Notification.cs",
-              "RelativeToolTip": "InstagramProjectBack\\Models\\Notification.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-06-03T15:33:27.852Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 9,
               "Title": "PostCommentController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\PostCommentController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\PostCommentController.cs",
@@ -191,7 +208,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 7,
               "Title": "PostLikeController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\PostLikeController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\PostLikeController.cs",
@@ -204,7 +221,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "PostLikeRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Repositories\\PostLikeRepository.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Repositories\\PostLikeRepository.cs",
@@ -217,7 +234,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "IPostLikeRepository.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Models\\Interfaces\\IPostLikeRepository.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Models\\Interfaces\\IPostLikeRepository.cs",
@@ -230,39 +247,39 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 8,
               "Title": "PostController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\PostController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\PostController.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\PostController.cs",
               "RelativeToolTip": "InstagramProjectBack\\Controllers\\PostController.cs",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAAGYAAAABAAAAAAAAAA==",
+              "ViewState": "AgIAAAkAAAAAAAAAAIBJwGYAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T19:09:40.34Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "FriendRequestController.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\FriendRequestController.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Controllers\\FriendRequestController.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Controllers\\FriendRequestController.cs",
               "RelativeToolTip": "InstagramProjectBack\\Controllers\\FriendRequestController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE4AAAA+AAAAAAAAAA==",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwCIAAABGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-23T19:09:15.688Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 6,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Program.cs",
               "RelativeDocumentMoniker": "InstagramProjectBack\\Program.cs",
               "ToolTip": "C:\\Users\\PC\\Desktop\\InstagramProject-Back\\InstagramProjectBack\\Program.cs",
               "RelativeToolTip": "InstagramProjectBack\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAeAAAAAAAAAA==",
+              "ViewState": "AgIAAE8AAAAAAAAAAAAAAGwAAAAKAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-05-01T14:11:05.268Z",
               "EditorCaption": ""
