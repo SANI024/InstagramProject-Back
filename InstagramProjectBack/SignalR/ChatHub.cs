@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.SignalR;
 
@@ -12,8 +13,9 @@ namespace InstagramProjectBack.Models
             _messageService = messageService;
         }
 
-        public async Task SendMessage(string senderId, string receiverId, string message)
+        public async Task SendMessage( string receiverId, string message)
         {
+            var senderId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
             if (!int.TryParse(senderId, out int senderIntId) || !int.TryParse(receiverId, out int receiverIntId))
             {
                 await Clients.Caller.SendAsync("MessageFailed", "Invalid IDs.");
