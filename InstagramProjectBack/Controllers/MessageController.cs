@@ -21,19 +21,33 @@ namespace InstagramProjectBack.Controllers
         [HttpPost("sendMessage")]
         public async Task<IActionResult> SendMessage([FromBody] SendMessageDto dto)
         {
-            if (!int.TryParse(dto.SenderId, out int senderIntId) || !int.TryParse(dto.ReceiverId, out int receiverIntId))
+            try
             {
-                return BadRequest("Invalid IDs.");
-            }
+                if (!int.TryParse(dto.SenderId, out int senderIntId) || !int.TryParse(dto.ReceiverId, out int receiverIntId))
+                {
+                    return BadRequest(new { Message = "Invalid sender or receiver ID." });
+                }
 
-            var result = await _messageService.ProcessMessageAsync(senderIntId, receiverIntId, dto.Message);
-            if (!result.Success)
+                var result = await _messageService.ProcessMessageAsync(senderIntId, receiverIntId, dto.Message);
+
+                if (!result.Success)
+                {
+                    if (result.Message.Contains("not found") || result.Message.Contains("doesn't exist", StringComparison.OrdinalIgnoreCase))
+                        return NotFound(new { result.Message });
+
+                    return BadRequest(new { result.Message });
+                }
+
+                return Ok(new
+                {
+                    Message = "Message sent successfully.",
+                });
+            }
+            catch (Exception ex)
             {
-                return BadRequest(result.Message);
+                return StatusCode(500, new { Message = $"An internal error occurred: {ex.Message}" });
             }
-
-            return Ok(new { Message = $"{result.Message}", Data = result.Data.Text });
         }
-    }
 
+    }
 }

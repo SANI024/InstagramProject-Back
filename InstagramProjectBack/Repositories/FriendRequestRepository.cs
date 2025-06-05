@@ -68,7 +68,7 @@ namespace InstagramProjectBack.Repositories
                 Success = true,
                 Message = "Successfully fetched friend requests.",
                 Data = FriendRequests
-            };
+            }; 
         }
 
         public BaseResponseDto<Friend_Request> AcceptFriendRequest(int sender_id, int reciver_id)
