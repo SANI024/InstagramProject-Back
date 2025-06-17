@@ -1,5 +1,4 @@
-﻿using InstagramProjectBack.Models;
-using InstagramProjectBack.Models.Requests;
+﻿using InstagramProjectBack.Models.Requests;
 
 namespace InstagramProjectBack.Models.Interfaces
 {
