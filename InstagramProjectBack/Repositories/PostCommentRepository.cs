@@ -8,50 +8,52 @@ namespace InstagramProjectBack.Repositories
     public class PostCommentRepository : IPostCommentRepository
     {
         private readonly AppDbContext _context;
+
         public PostCommentRepository(AppDbContext context)
         {
             _context = context;
         }
-        public BaseResponseDto<PostComment> CreatePostComment(CreatePostCommentDto dto)
+
+        public async Task<BaseResponseDto<PostComment>> CreatePostCommentAsync(CreatePostCommentDto dto)
         {
-            User UserExists = _context.Users.FirstOrDefault(u => u.Id == dto.UserId);
-            if (UserExists == null)
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == dto.UserId);
+            if (user == null)
             {
                 return new BaseResponseDto<PostComment>
                 {
                     Data = null,
-                    Message = "User Doesn't Exists.",
-                    Success = false,
+                    Message = "User doesn't exist.",
+                    Success = false
                 };
             }
 
-            PostComment NewPostComment = new PostComment
+            var newPostComment = new PostComment
             {
                 UserId = dto.UserId,
                 Text = dto.Text,
                 PostId = dto.PostId
             };
 
-            _context.PostComments.Add(NewPostComment);
-            _context.SaveChanges();
+            _context.PostComments.Add(newPostComment);
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<PostComment>
             {
-                Data = NewPostComment,
-                Message = "Succesfully Created PostComment.",
+                Data = newPostComment,
+                Message = "Successfully created post comment.",
                 Success = true
             };
         }
 
-        public BaseResponseDto<List<PostComment>> GetPostComments()
+        public async Task<BaseResponseDto<List<PostComment>>> GetPostCommentsAsync()
         {
-            List<PostComment> postComments = _context.PostComments.ToList();
+            var postComments = await _context.PostComments.ToListAsync();
             if (postComments.Count == 0)
             {
                 return new BaseResponseDto<List<PostComment>>
                 {
                     Data = null,
-                    Message = "no post comments avaiable.",
+                    Message = "No post comments available.",
                     Success = false
                 };
             }
@@ -59,49 +61,56 @@ namespace InstagramProjectBack.Repositories
             return new BaseResponseDto<List<PostComment>>
             {
                 Data = postComments,
-                Message = "Succesfully Retrived PostComments.",
+                Message = "Successfully retrieved post comments.",
                 Success = true
             };
         }
 
-        public BaseResponseDto<PostComment> RemovePostComment(int UserId, int PostCommentId)
+        public async Task<BaseResponseDto<PostComment>> RemovePostCommentAsync(int userId, int postCommentId)
         {
-            PostComment PostCommentExists = _context.PostComments.Include(pc => pc.Post).FirstOrDefault(pc => pc.UserId == UserId && pc.Id == PostCommentId);
-            if (PostCommentExists == null)
-            {
-                return new BaseResponseDto<PostComment>
-                {
-                    Success = false,
-                    Data = null,
-                    Message = "User cant delete post."
-                };
-            }
-           
-            _context.PostComments.Remove(PostCommentExists);
-            _context.SaveChanges();
+            var postComment = await _context.PostComments
+                .Include(pc => pc.Post)
+                .FirstOrDefaultAsync(pc => pc.UserId == userId && pc.Id == postCommentId);
 
-            return new BaseResponseDto<PostComment>
-            {
-                Data = null,
-                Message = "Succesfully removed post.",
-                Success = true,
-            };
-        }
-
-        public BaseResponseDto<PostComment> UpdatePostComment(UpdatePostCommentDto dto)
-        {
-            PostComment postComment = _context.PostComments.FirstOrDefault(pc => pc.UserId == dto.UserId && pc.Id == dto.CommentId);
             if (postComment == null)
             {
                 return new BaseResponseDto<PostComment>
                 {
                     Success = false,
-                    Message = "Can not update the comment.",
+                    Data = null,
+                    Message = "User can't delete post."
+                };
+            }
+
+            _context.PostComments.Remove(postComment);
+            await _context.SaveChangesAsync();
+
+            return new BaseResponseDto<PostComment>
+            {
+                Data = null,
+                Message = "Successfully removed post.",
+                Success = true
+            };
+        }
+
+        public async Task<BaseResponseDto<PostComment>> UpdatePostCommentAsync(UpdatePostCommentDto dto)
+        {
+            var postComment = await _context.PostComments
+                .FirstOrDefaultAsync(pc => pc.UserId == dto.UserId && pc.Id == dto.CommentId);
+
+            if (postComment == null)
+            {
+                return new BaseResponseDto<PostComment>
+                {
+                    Success = false,
+                    Message = "Cannot update the comment.",
                     Data = null
                 };
             }
+
             postComment.Text = dto.Text;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
+
             return new BaseResponseDto<PostComment>
             {
                 Success = true,
@@ -111,4 +120,3 @@ namespace InstagramProjectBack.Repositories
         }
     }
 }
-

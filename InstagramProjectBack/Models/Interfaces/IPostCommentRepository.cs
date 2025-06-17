@@ -1,13 +1,14 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 
+
 namespace InstagramProjectBack.Repositories
 {
     public interface IPostCommentRepository
     {
-        BaseResponseDto<PostComment> CreatePostComment(CreatePostCommentDto dto);
-        BaseResponseDto<PostComment> RemovePostComment(int UserId, int PostCommentId);
-        BaseResponseDto<PostComment> UpdatePostComment(UpdatePostCommentDto dto);
-        BaseResponseDto<List<PostComment>> GetPostComments();
+        Task<BaseResponseDto<PostComment>> CreatePostCommentAsync(CreatePostCommentDto dto);
+        Task<BaseResponseDto<PostComment>> RemovePostCommentAsync(int userId, int postCommentId);
+        Task<BaseResponseDto<PostComment>> UpdatePostCommentAsync(UpdatePostCommentDto dto);
+        Task<BaseResponseDto<List<PostComment>>> GetPostCommentsAsync();
     }
 }

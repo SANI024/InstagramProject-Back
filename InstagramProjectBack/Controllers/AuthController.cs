@@ -1,6 +1,7 @@
 ﻿using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace InstagramProjectBack.Controllers
 {
@@ -25,8 +26,8 @@ namespace InstagramProjectBack.Controllers
                 if (!response.Success)
                 {
                     if (response.Message.Contains("already"))
-                        return Conflict(new { response.Message }); // 409 
-                    return BadRequest(new { response.Message }); // 400 
+                        return Conflict(new { response.Message }); 
+                    return BadRequest(new { response.Message });  
                 }
 
                 return Ok(response);
@@ -38,14 +39,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] UserLoginDto dto)
+        public async Task<IActionResult> Login([FromBody] UserLoginDto dto)
         {
             try
             {
-                var response = _authService.Login(dto);
+                var response = await _authService.Login(dto);
 
                 if (!response.Success)
-                    return Unauthorized(new { response.Message }); // 401 
+                    return Unauthorized(new { response.Message }); 
 
                 return Ok(response);
             }
@@ -65,7 +66,7 @@ namespace InstagramProjectBack.Controllers
                 if (!response.Success)
                 {
                     if (response.Message.Contains("not found"))
-                        return NotFound(new { response.Message }); // 404 
+                        return NotFound(new { response.Message });  
                     return BadRequest(new { response.Message });
                 }
 
@@ -78,11 +79,11 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpGet("verify")]
-        public IActionResult VerifyEmail([FromQuery] string token)
+        public async Task<IActionResult> VerifyEmail([FromQuery] string token)
         {
             try
             {
-                bool isVerified = _authService.VerifyUser(token);
+                bool isVerified = await _authService.VerifyUserAsync(token);
 
                 if (!isVerified)
                     return BadRequest(new { Message = "User verification failed." });
@@ -94,6 +95,5 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
-
     }
 }

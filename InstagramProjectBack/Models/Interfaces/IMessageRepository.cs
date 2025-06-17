@@ -4,7 +4,8 @@ namespace InstagramProjectBack.Repositories
 {
     public interface IMessageRepository
     {
-        BaseResponseDto<Message> SendMessage(int SenderId, int ReciverId, string Message);
-        BaseResponseDto<List<Message>> GetMessages(int UserId);
+       Task<BaseResponseDto<List<Message>>> GetMessagesAsync(int userId);
+       Task<BaseResponseDto<Message>> SendMessageAsync(int senderId, int reciverId, string message);
+
     }
 }

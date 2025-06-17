@@ -1,68 +1,74 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace InstagramProjectBack.Repositories
 {
-
     public class MessageRepository : IMessageRepository
     {
         private readonly AppDbContext _context;
+
         public MessageRepository(AppDbContext context)
         {
             _context = context;
         }
-        public BaseResponseDto<List<Message>> GetMessages(int UserId)
+
+        public async Task<BaseResponseDto<List<Message>>> GetMessagesAsync(int userId)
         {
-            User UserExists = _context.Users.FirstOrDefault(u => u.Id == UserId);
-            if (UserExists == null)
+            var userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (userExists == null)
             {
                 return new BaseResponseDto<List<Message>>
                 {
                     Success = false,
                     Data = null,
-                    Message = "User Doesn't Exists."
+                    Message = "User doesn't exist."
                 };
             }
 
-            List<Message> UserMessages = _context.Messages.Where(m => m.ReciverId == UserId || m.SenderId == UserId).ToList();
-            if (UserMessages.Count == 0)
+            var userMessages = await _context.Messages
+                .Where(m => m.ReciverId == userId || m.SenderId == userId)
+                .ToListAsync();
+
+            if (userMessages.Count == 0)
             {
                 return new BaseResponseDto<List<Message>>
                 {
                     Success = false,
                     Data = null,
-                    Message = "No Messages."
+                    Message = "No messages found."
                 };
             }
 
             return new BaseResponseDto<List<Message>>
             {
                 Success = true,
-                Data = UserMessages,
-                Message = "Succesfully Fetched Messages."
+                Data = userMessages,
+                Message = "Successfully fetched messages."
             };
         }
 
-        public BaseResponseDto<Message> SendMessage(int senderId, int reciverId, string message)
+        public async Task<BaseResponseDto<Message>> SendMessageAsync(int senderId, int reciverId, string message)
         {
-            User SenderExists = _context.Users.FirstOrDefault(u => u.Id == senderId);
-            if (SenderExists == null)
+            var senderExists = await _context.Users.FindAsync(senderId);
+            if (senderExists == null)
             {
                 return new BaseResponseDto<Message>
                 {
                     Success = false,
                     Data = null,
-                    Message = "Sender Doesn't Exists.",
+                    Message = "Sender doesn't exist."
                 };
             }
-            User ReciverExists = _context.Users.FirstOrDefault(u => u.Id == reciverId);
-            if (ReciverExists == null)
+
+            var reciverExists = await _context.Users.FindAsync(reciverId);
+            if (reciverExists == null)
             {
                 return new BaseResponseDto<Message>
                 {
                     Success = false,
                     Data = null,
-                    Message = "Reciver Doesn't Exists.",
+                    Message = "Receiver doesn't exist."
                 };
             }
 
@@ -72,24 +78,25 @@ namespace InstagramProjectBack.Repositories
                 {
                     Success = false,
                     Data = null,
-                    Message = "Invalid Message Format.",
+                    Message = "Invalid message format."
                 };
             }
 
-            Message NewMessage = new Message
+            var newMessage = new Message
             {
                 SenderId = senderId,
                 ReciverId = reciverId,
                 Text = message
             };
 
-            _context.Messages.Add(NewMessage);
-            _context.SaveChanges();
+            await _context.Messages.AddAsync(newMessage);
+            await _context.SaveChangesAsync();
+
             return new BaseResponseDto<Message>
             {
                 Success = true,
-                Data = NewMessage,
-                Message = "Succefully Created Message."
+                Data = newMessage,
+                Message = "Successfully created message."
             };
         }
     }

@@ -14,9 +14,9 @@ namespace InstagramProjectBack.Repositories
             _context = context;
         }
 
-        public BaseResponseDto<Post> CreatePost(CreatePostDto createPostDto)
+        public async Task<BaseResponseDto<Post>> CreatePostAsync(CreatePostDto createPostDto)
         {
-            User userExists = _context.Users.FirstOrDefault(u => u.Id == createPostDto.UserId);
+            var userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == createPostDto.UserId);
             if (userExists == null)
             {
                 return new BaseResponseDto<Post>
@@ -37,7 +37,7 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            Post newPost = new Post
+            var newPost = new Post
             {
                 UserId = createPostDto.UserId,
                 VideoUrl = createPostDto.VideoUrl,
@@ -47,7 +47,7 @@ namespace InstagramProjectBack.Repositories
             };
 
             _context.Posts.Add(newPost);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<Post>
             {
@@ -57,9 +57,12 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
-        public BaseResponseDto<List<Post>> GetPosts()
+        public async Task<BaseResponseDto<List<Post>>> GetPostsAsync()
         {
-            List<Post> postList = _context.Posts.Include(p => p.User).ToList();
+            var postList = await _context.Posts
+                .Include(p => p.User)
+                .ToListAsync();
+
             if (postList.Count == 0)
             {
                 return new BaseResponseDto<List<Post>>
@@ -78,9 +81,9 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
-        public BaseResponseDto<Post> RemovePost(int postId, int userId)
+        public async Task<BaseResponseDto<Post>> RemovePostAsync(int postId, int userId)
         {
-            Post postExists = _context.Posts.FirstOrDefault(p => p.Id == postId && p.UserId == userId);
+            var postExists = await _context.Posts.FirstOrDefaultAsync(p => p.Id == postId && p.UserId == userId);
             if (postExists == null)
             {
                 return new BaseResponseDto<Post>
@@ -92,7 +95,7 @@ namespace InstagramProjectBack.Repositories
             }
 
             _context.Posts.Remove(postExists);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<Post>
             {
@@ -102,9 +105,9 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
-        public BaseResponseDto<Post> UpdatePost(UpdatePostDto updatePostDto)
+        public async Task<BaseResponseDto<Post>> UpdatePostAsync(UpdatePostDto updatePostDto)
         {
-            Post postExists = _context.Posts.FirstOrDefault(p => p.Id == updatePostDto.PostId && p.UserId == updatePostDto.UserId);
+            var postExists = await _context.Posts.FirstOrDefaultAsync(p => p.Id == updatePostDto.PostId && p.UserId == updatePostDto.UserId);
             if (postExists == null)
             {
                 return new BaseResponseDto<Post>
@@ -130,7 +133,7 @@ namespace InstagramProjectBack.Repositories
                 postExists.Description = updatePostDto.Description;
             }
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<Post>
             {

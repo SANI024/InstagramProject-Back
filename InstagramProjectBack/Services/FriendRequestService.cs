@@ -1,6 +1,9 @@
 ﻿using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Requests;
 using InstagramProjectBack.Models.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace InstagramProjectBack.Services
 {
@@ -15,10 +18,10 @@ namespace InstagramProjectBack.Services
             _friendRequestRepo = friendRequestRepo;
         }
 
-        public BaseResponseDto<Friend_Request> SendFriendRequestService(int sender_id, int reciver_id)
+        public async Task<BaseResponseDto<Friend_Request>> SendFriendRequestServiceAsync(int sender_id, int reciver_id)
         {
-            var status = _friendRequestRepo.SendFriendRequest(sender_id, reciver_id);
-            if (status.Success == false)
+            var status = await _friendRequestRepo.SendFriendRequestAsync(sender_id, reciver_id);
+            if (!status.Success)
             {
                 return new BaseResponseDto<Friend_Request>
                 {
@@ -27,15 +30,14 @@ namespace InstagramProjectBack.Services
                     Success = false,
                 };
             }
+
             var notification = new NotificationDto
             {
-
                 RecieverId = reciver_id,
                 Type = "friend request",
                 CreatedAt = DateTime.Now,
                 IsRead = false,
             };
-
 
             var sendNotif = _notificationRepository.SendNotificationAsync(notification);
 
@@ -45,8 +47,7 @@ namespace InstagramProjectBack.Services
                 {
                     Success = status.Success,
                     Data = status.Data,
-                    Message = "error sending message"
-
+                    Message = "Error sending notification"
                 };
             }
 
@@ -55,25 +56,23 @@ namespace InstagramProjectBack.Services
                 Success = status.Success,
                 Data = status.Data,
                 Message = status.Message
-
             };
-
         }
 
-        public BaseResponseDto<List<Friend_Request>> GetFriendRequestsService(int userId)
+        public async Task<BaseResponseDto<List<Friend_Request>>> GetFriendRequestsServiceAsync(int userId)
         {
-            BaseResponseDto<List<Friend_Request>> FriendRequests = _friendRequestRepo.GetFriendRequestsByReciverId(userId);
+            var friendRequests = await _friendRequestRepo.GetFriendRequestsByReciverIdAsync(userId);
             return new BaseResponseDto<List<Friend_Request>>
             {
-                Data = FriendRequests.Data,
-                Message = FriendRequests.Message,
-                Success = FriendRequests.Success
+                Data = friendRequests.Data,
+                Message = friendRequests.Message,
+                Success = friendRequests.Success
             };
         }
 
-        public BaseResponseDto<Friend_Request> AcceptFriendRequestService(int sender_id, int receiver_id)
+        public async Task<BaseResponseDto<Friend_Request>> AcceptFriendRequestServiceAsync(int sender_id, int receiver_id)
         {
-            BaseResponseDto<Friend_Request> result = _friendRequestRepo.AcceptFriendRequest(sender_id, receiver_id);
+            var result = await _friendRequestRepo.AcceptFriendRequestAsync(sender_id, receiver_id);
             return new BaseResponseDto<Friend_Request>
             {
                 Data = result.Data,
@@ -81,10 +80,10 @@ namespace InstagramProjectBack.Services
                 Success = result.Success
             };
         }
-        
-         public BaseResponseDto<Friend_Request> RejectFriendRequestService(int sender_id,int receiver_id)
+
+        public async Task<BaseResponseDto<Friend_Request>> RejectFriendRequestServiceAsync(int sender_id, int receiver_id)
         {
-            BaseResponseDto<Friend_Request> result = _friendRequestRepo.RejectFriendRequest(sender_id,receiver_id);
+            var result = await _friendRequestRepo.RejectFriendRequestAsync(sender_id, receiver_id);
             return new BaseResponseDto<Friend_Request>
             {
                 Data = result.Data,

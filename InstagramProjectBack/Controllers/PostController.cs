@@ -4,16 +4,17 @@ using InstagramProjectBack.Repositories;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace InstagramProjectBack.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class PostController : ControllerBase
     {
         private readonly IPostRepository _postRepository;
         private readonly TokenService _tokenService;
+
         public PostController(IPostRepository postRepository, TokenService tokenService)
         {
             _postRepository = postRepository;
@@ -21,14 +22,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPost("create post")]
-        public IActionResult CreatePost([FromBody] CreatePostDto dto)
+        public async Task<IActionResult> CreatePost([FromBody] CreatePostDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postRepository.CreatePost(dto);
+                var result = await _postRepository.CreatePostAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -43,11 +44,11 @@ namespace InstagramProjectBack.Controllers
 
         [AllowAnonymous]
         [HttpGet("get all posts")]
-        public IActionResult GetPosts()
+        public async Task<IActionResult> GetPosts()
         {
             try
             {
-                var result = _postRepository.GetPosts();
+                var result = await _postRepository.GetPostsAsync();
 
                 if (!result.Success)
                     return NotFound(new { result.Message });
@@ -61,12 +62,12 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpDelete("delete post")]
-        public IActionResult RemovePost([FromBody] RemovePostRequestDto dto)
+        public async Task<IActionResult> RemovePost([FromBody] RemovePostRequestDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                var result = _postRepository.RemovePost(dto.PostId, userId);
+                var result = await _postRepository.RemovePostAsync(dto.PostId, userId);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -80,14 +81,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPatch("update post")]
-        public IActionResult UpdatePost([FromBody] UpdatePostDto dto)
+        public async Task<IActionResult> UpdatePost([FromBody] UpdatePostDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postRepository.UpdatePost(dto);
+                var result = await _postRepository.UpdatePostAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });

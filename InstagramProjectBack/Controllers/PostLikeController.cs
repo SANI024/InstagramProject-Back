@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using InstagramProjectBack.Services;
-using InstagramProjectBack.Models;
 using Microsoft.AspNetCore.Authorization;
 using InstagramProjectBack.Models.Interfaces;
 using InstagramProjectBack.Models.Dto;
+
 
 namespace InstagramProjectBack.Controllers
 {
@@ -19,13 +19,14 @@ namespace InstagramProjectBack.Controllers
             _postLikeRepository = postRepository;
             _tokenService = tokenService;
         }
+
         [AllowAnonymous]
         [HttpGet("get all post likes")]
-        public IActionResult GetAllPostLikes()
+        public async Task<IActionResult> GetAllPostLikes()
         {
             try
             {
-                var result = _postLikeRepository.GetAllPostLikes();
+                var result = await _postLikeRepository.GetAllPostLikesAsync();
 
                 if (!result.Success)
                     return NotFound(new { result.Message });
@@ -37,16 +38,17 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+
         [Authorize]
         [HttpPost("like post")]
-        public IActionResult CreatePostLike([FromBody] PostLikeRequestDto dto)
+        public async Task<IActionResult> CreatePostLike([FromBody] PostLikeRequestDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postLikeRepository.CreatePostLike(dto);
+                var result = await _postLikeRepository.CreatePostLikeAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -58,16 +60,17 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+
         [Authorize]
         [HttpDelete("unlike post")]
-        public IActionResult DeletePostLike([FromBody] PostDislikeRequestDto dto)
+        public async Task<IActionResult> DeletePostLike([FromBody] PostDislikeRequestDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postLikeRepository.DeletePostLike(dto);
+                var result = await _postLikeRepository.DeletePostLikeAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });

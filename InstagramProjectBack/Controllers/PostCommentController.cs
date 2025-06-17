@@ -1,6 +1,4 @@
-using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
-using InstagramProjectBack.Models.Interfaces;
 using InstagramProjectBack.Repositories;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -14,6 +12,7 @@ namespace InstagramProjectBack.Controllers
     {
         private readonly IPostCommentRepository _postCommentRepository;
         private readonly TokenService _tokenService;
+
         public PostCommentController(IPostCommentRepository postCommentRepository, TokenService tokenService)
         {
             _postCommentRepository = postCommentRepository;
@@ -21,14 +20,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPost("create post comments")]
-        public IActionResult CreatePostComment([FromBody] CreatePostCommentDto dto)
+        public async Task<IActionResult> CreatePostComment([FromBody] CreatePostCommentDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postCommentRepository.CreatePostComment(dto);
+                var result = await _postCommentRepository.CreatePostCommentAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -42,11 +41,11 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpGet("get all post comments")]
-        public IActionResult GetAllPostComments()
+        public async Task<IActionResult> GetAllPostComments()
         {
             try
             {
-                var result = _postCommentRepository.GetPostComments();
+                var result = await _postCommentRepository.GetPostCommentsAsync();
 
                 if (!result.Success)
                     return NotFound(new { result.Message });
@@ -61,12 +60,12 @@ namespace InstagramProjectBack.Controllers
 
         [Authorize]
         [HttpDelete("delete post comments")]
-        public IActionResult DeletePostComment([FromBody] int postId)
+        public async Task<IActionResult> DeletePostComment([FromBody] int postId)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                var result = _postCommentRepository.RemovePostComment(userId, postId);
+                var result = await _postCommentRepository.RemovePostCommentAsync(userId, postId);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -81,14 +80,14 @@ namespace InstagramProjectBack.Controllers
 
         [Authorize]
         [HttpPut("update post comments")]
-        public IActionResult UpdatePostComment([FromBody] UpdatePostCommentDto dto)
+        public async Task<IActionResult> UpdatePostComment([FromBody] UpdatePostCommentDto dto)
         {
             try
             {
                 int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 dto.UserId = userId;
 
-                var result = _postCommentRepository.UpdatePostComment(dto);
+                var result = await _postCommentRepository.UpdatePostCommentAsync(dto);
 
                 if (!result.Success)
                     return BadRequest(new { result.Message });
@@ -100,6 +99,5 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
-
     }
 }

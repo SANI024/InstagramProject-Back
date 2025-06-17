@@ -12,10 +12,11 @@ namespace InstagramProjectBack.Repositories
         public PostLikeRepository(AppDbContext context)
         {
             _context = context;
-         }
-        public BaseResponseDto<PostLike> CreatePostLike(PostLikeRequestDto dto)
+        }
+
+        public async Task<BaseResponseDto<PostLike>> CreatePostLikeAsync(PostLikeRequestDto dto)
         {
-            User userExists = _context.Users.FirstOrDefault(u => u.Id == dto.UserId);
+            User userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == dto.UserId);
             if (userExists == null)
             {
                 return new BaseResponseDto<PostLike>
@@ -26,7 +27,7 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            var existingLike = _context.PostLikes.FirstOrDefault(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
+            var existingLike = await _context.PostLikes.FirstOrDefaultAsync(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
             if (existingLike != null)
             {
                return new BaseResponseDto<PostLike>
@@ -36,63 +37,63 @@ namespace InstagramProjectBack.Repositories
                  Message = "User already liked this post."
                };
             }
-            PostLike NewPostLike = new PostLike
+            
+            PostLike newPostLike = new PostLike
             {
                 PostId = dto.PostId,
                 UserId = dto.UserId,
-
             };
-            _context.PostLikes.Add(NewPostLike);
-            _context.SaveChanges();
+
+            await _context.PostLikes.AddAsync(newPostLike);
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<PostLike> 
             { 
-                Success= true,
-                Data= NewPostLike,
-                Message= "added like"
+                Success = true,
+                Data = newPostLike,
+                Message = "Added like"
             };
-
         }
 
-        public BaseResponseDto<PostLike> DeletePostLike(PostDislikeRequestDto dto)
+        public async Task<BaseResponseDto<PostLike>> DeletePostLikeAsync(PostDislikeRequestDto dto)
         {
-            User userExists = _context.Users.FirstOrDefault(u => u.Id == dto.UserId);
-            PostLike existing = _context.PostLikes.FirstOrDefault(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
-            if (existing == null )
+            User userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == dto.UserId);
+            var existing = await _context.PostLikes.FirstOrDefaultAsync(pl => pl.PostId == dto.PostId && pl.UserId == dto.UserId);
+            
+            if (existing == null)
             {
                 return new BaseResponseDto<PostLike> 
                 {
                     Success = false,
                     Data = null,
-                    Message="not liked"
+                    Message = "Not liked"
                 };
-
             }
 
-            if(userExists == null)
+            if (userExists == null)
             {
                 return new BaseResponseDto<PostLike>
                 {
                     Success = false,
                     Data = null,
-                    Message = "user not found"
+                    Message = "User not found"
                 };
             }
-             _context.PostLikes .Remove(existing);
-            _context.SaveChanges();
+
+            _context.PostLikes.Remove(existing);
+            await _context.SaveChangesAsync();
 
             return new BaseResponseDto<PostLike>
             {
                 Success = true,
                 Data = existing,
-                Message = "like removed"
+                Message = "Like removed"
             };
-
         }
 
-        public BaseResponseDto<List<PostLike>> GetAllPostLikes()
+        public async Task<BaseResponseDto<List<PostLike>>> GetAllPostLikesAsync()
         {
-            List<PostLike> likes = _context.PostLikes.ToList();
+            List<PostLike> likes = await _context.PostLikes.ToListAsync();
 
             if (likes.Count == 0)
             {
@@ -111,7 +112,5 @@ namespace InstagramProjectBack.Repositories
                 Message = "All post likes retrieved."
             };
         }
-
-       
     }
 }

@@ -1,8 +1,9 @@
-using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Threading.Tasks;
 
 namespace InstagramProjectBack.Controllers
 {
@@ -13,7 +14,7 @@ namespace InstagramProjectBack.Controllers
     {
         private readonly FriendRequestService _friendRequestService;
         private readonly TokenService _tokenService;
-        
+
         public FriendRequestController(FriendRequestService friendRequestService, TokenService tokenService)
         {
             _friendRequestService = friendRequestService;
@@ -21,12 +22,12 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPost("send")]
-        public IActionResult SendFriendRequest([FromBody] SendFriendRequestDto dto)
+        public async Task<IActionResult> SendFriendRequest([FromBody] SendFriendRequestDto dto)
         {
             try
             {
                 int senderId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                var result = _friendRequestService.SendFriendRequestService(senderId, dto.Reciver_Id);
+                var result = await _friendRequestService.SendFriendRequestServiceAsync(senderId, dto.Reciver_Id);
 
                 if (!result.Success)
                 {
@@ -44,12 +45,12 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpGet("get")]
-        public IActionResult GetFriendRequests()
+        public async Task<IActionResult> GetFriendRequests()
         {
             try
             {
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                var result = _friendRequestService.GetFriendRequestsService(receiverId);
+                var result = await _friendRequestService.GetFriendRequestsServiceAsync(receiverId);
                 if (!result.Success)
                     return NotFound(new { result.Message }); // 404 
 
@@ -62,14 +63,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPatch("accept")]
-        public IActionResult AcceptFriendRequest([FromBody] AcceptFriendRequestDto dto)
+        public async Task<IActionResult> AcceptFriendRequest([FromBody] AcceptFriendRequestDto dto)
         {
             try
             {
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 int senderId = dto.Sender_Id;
 
-                var result = _friendRequestService.AcceptFriendRequestService(senderId,receiverId);
+                var result = await _friendRequestService.AcceptFriendRequestServiceAsync(senderId, receiverId);
 
                 if (!result.Success)
                 {
@@ -87,14 +88,14 @@ namespace InstagramProjectBack.Controllers
         }
 
         [HttpPatch("reject")]
-        public IActionResult RejectFriendRequest([FromBody] RejectFriendRequestDto dto)
+        public async Task<IActionResult> RejectFriendRequest([FromBody] RejectFriendRequestDto dto)
         {
             try
             {
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 int senderId = dto.Sender_Id;
 
-                var result = _friendRequestService.RejectFriendRequestService(senderId,receiverId);
+                var result = await _friendRequestService.RejectFriendRequestServiceAsync(senderId, receiverId);
 
                 if (!result.Success)
                 {

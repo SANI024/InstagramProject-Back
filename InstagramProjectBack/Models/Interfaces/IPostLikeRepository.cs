@@ -4,9 +4,8 @@ namespace InstagramProjectBack.Models.Interfaces
 {
     public interface IPostLikeRepository
     {
-        BaseResponseDto<List<PostLike>> GetAllPostLikes();
-        BaseResponseDto<PostLike> CreatePostLike(PostLikeRequestDto dto);
-        BaseResponseDto<PostLike> DeletePostLike(PostDislikeRequestDto dto);
-       
+        Task<BaseResponseDto<List<PostLike>>> GetAllPostLikesAsync();
+        Task<BaseResponseDto<PostLike>> CreatePostLikeAsync(PostLikeRequestDto dto);
+        Task<BaseResponseDto<PostLike>> DeletePostLikeAsync(PostDislikeRequestDto dto);
     }
 }

@@ -1,7 +1,5 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Repositories;
-using Microsoft.AspNetCore.SignalR;
-
 namespace InstagramProjectBack.Services
 {
     public class MessageService
@@ -26,8 +24,8 @@ namespace InstagramProjectBack.Services
             {
                 return new BaseResponseDto<Message> { Success = false, Message = "You are not friends." };
             }
-
-            return _messageRepository.SendMessage(senderId, receiverId, message);
+             var sentMessage = await _messageRepository.SendMessageAsync(senderId, receiverId, message);
+            return sentMessage;
         }
 
     };

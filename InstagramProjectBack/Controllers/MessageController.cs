@@ -1,6 +1,7 @@
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Services;
+using InstagramProjectBack.SignalR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 namespace InstagramProjectBack.Controllers

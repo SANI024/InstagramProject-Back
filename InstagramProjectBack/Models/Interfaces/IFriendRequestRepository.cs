@@ -1,10 +1,9 @@
-
 using InstagramProjectBack.Models;
 
 public interface IFriendRequestRepository
 {
-    BaseResponseDto<Friend_Request> SendFriendRequest(int sender_id, int reciver_id);
-    BaseResponseDto<List<Friend_Request>> GetFriendRequestsByReciverId(int reciver_id);
-    BaseResponseDto<Friend_Request> AcceptFriendRequest(int sender_id, int reciver_id);
-    BaseResponseDto<Friend_Request> RejectFriendRequest(int sender_id, int reciver_id);
+    Task<BaseResponseDto<Friend_Request>> SendFriendRequestAsync(int sender_id, int reciver_id);
+    Task<BaseResponseDto<List<Friend_Request>>> GetFriendRequestsByReciverIdAsync(int reciver_id);
+    Task<BaseResponseDto<Friend_Request>> AcceptFriendRequestAsync(int sender_id, int reciver_id);
+    Task<BaseResponseDto<Friend_Request>> RejectFriendRequestAsync(int sender_id, int reciver_id);
 }

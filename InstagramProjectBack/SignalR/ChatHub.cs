@@ -3,7 +3,7 @@ using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 
-namespace InstagramProjectBack.Models
+namespace InstagramProjectBack.SignalR
 {
     [Authorize]
     public class ChatHub : Hub
@@ -15,10 +15,19 @@ namespace InstagramProjectBack.Models
             _messageService = messageService;
         }
 
+        public override async Task OnConnectedAsync()
+        {
+          var userId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+          Console.WriteLine($"User connected: {userId}");
+          await base.OnConnectedAsync();
+        }
+
+
 
         public async Task SendMessage(string receiverId, string message)
         {
             var senderId = Context.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Console.WriteLine($"SignalR senderId from context: {senderId}");
             if (!int.TryParse(senderId, out int senderIntId) || !int.TryParse(receiverId, out int receiverIntId))
             {
                 await Clients.Caller.SendAsync("MessageFailed", "Invalid IDs.");
