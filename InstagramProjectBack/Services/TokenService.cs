@@ -11,6 +11,8 @@ namespace InstagramProjectBack.Services
     public class TokenService
     {
 
+        string JwtIssuerProd = Environment.GetEnvironmentVariable("Jwt_Issuer_Production");
+        string JwtAudienceProd = Environment.GetEnvironmentVariable("Jwt_Audience_Production");
         private readonly IConfiguration configuration;
         private readonly ILogger<TokenService> logger;
 
@@ -30,8 +32,7 @@ namespace InstagramProjectBack.Services
              new Claim(ClaimTypes.Email, user.Email)
             };
 
-            var key = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(configuration["AppSettings:Token"]!));
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt_Secret")));
 
             logger.LogInformation($"key: {key}");
 
@@ -39,8 +40,8 @@ namespace InstagramProjectBack.Services
             logger.LogInformation($"creds: {creds}");
 
             var tokenDescriptor = new JwtSecurityToken(
-                issuer: configuration["AppSettings:Issuer"],
-                audience: configuration["AppSettings:Audience"],
+                issuer: JwtIssuerProd,
+                audience: JwtAudienceProd,
                 claims: claims,
                 signingCredentials: creds,
                 expires: DateTime.UtcNow.AddSeconds(60)

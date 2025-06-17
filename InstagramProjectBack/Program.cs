@@ -12,14 +12,20 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.SignalR;
 using InstagramProjectBack.Models.Interfaces;
 using InstagramProjectBack.SignalR;
-using Microsoft.Extensions.Options;
+using dotenv.net;
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt_Secret"));
+string allowedOriginProd = Environment.GetEnvironmentVariable("Allowed_Origin_Production");
+string connectionString = Environment.GetEnvironmentVariable("Database_Connection_String");
+string JwtIssuerProd = Environment.GetEnvironmentVariable("Jwt_Issuer_Production");
+string JwtAudienceProd = Environment.GetEnvironmentVariable("Jwt_Audience_Production");
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins("http://localhost:4200")
+        policy.WithOrigins(allowedOriginProd)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); 
@@ -85,23 +91,20 @@ builder.Services.AddSwaggerGen(c =>
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseNpgsql(connectionString));
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
-        var key = Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!);
-
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
-            ValidIssuer = builder.Configuration["AppSettings:Issuer"],
+            ValidIssuer = JwtIssuerProd,
             ValidateAudience = true,
-            ValidAudience = builder.Configuration["AppSettings:Audience"],
+            ValidAudience = JwtAudienceProd,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(builder.Configuration["AppSettings:Token"]!))
+            IssuerSigningKey = new SymmetricSecurityKey(key),
         };
 
         options.Events = new JwtBearerEvents
