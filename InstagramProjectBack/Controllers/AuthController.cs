@@ -26,8 +26,8 @@ namespace InstagramProjectBack.Controllers
                 if (!response.Success)
                 {
                     if (response.Message.Contains("already"))
-                        return Conflict(new { response.Message }); 
-                    return BadRequest(new { response.Message });  
+                        return Conflict(new { response.Message });
+                    return BadRequest(new { response.Message });
                 }
 
                 return Ok(response);
@@ -46,7 +46,7 @@ namespace InstagramProjectBack.Controllers
                 var response = await _authService.Login(dto);
 
                 if (!response.Success)
-                    return Unauthorized(new { response.Message }); 
+                    return Unauthorized(new { response.Message });
 
                 return Ok(response);
             }
@@ -66,7 +66,7 @@ namespace InstagramProjectBack.Controllers
                 if (!response.Success)
                 {
                     if (response.Message.Contains("not found"))
-                        return NotFound(new { response.Message });  
+                        return NotFound(new { response.Message });
                     return BadRequest(new { response.Message });
                 }
 
@@ -94,6 +94,12 @@ namespace InstagramProjectBack.Controllers
             {
                 return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
+        }
+        
+        [HttpGet("ping")]
+        public IActionResult Ping()
+        {
+           return Ok("Alive");
         }
     }
 }
