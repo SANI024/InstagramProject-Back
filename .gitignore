@@ -38,4 +38,7 @@ Migrations
 
 # Ignore published output (if using ASP.NET Core for production)
 publish/
-.gitignore
+
+
+.env
+
