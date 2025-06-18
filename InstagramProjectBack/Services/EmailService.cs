@@ -16,7 +16,7 @@ namespace InstagramProjectBack.Services
         }
         public async Task SendEmail(string to,string token)
         {
-            string verificationLink = $"http://localhost:5150/api/Auth/verify?token={token}";
+            string verificationLink = $"https://nearish-back.onrender.com/api/Auth/verify?token={token}";
             var message = new MimeMessage();
             string from = _emailSettings.Username;
             string fromName = from.Split("@")[0];
