@@ -43,7 +43,7 @@ namespace InstagramProjectBack.Repositories
                 Name = dto.Name,
                 Email = dto.Email,
                 PofileImage = dto.ProfileImage,
-                IsVerified = false
+                IsVerified = false,
             };
 
             user.PasswordHash = _passwordHasher.HashPassword(user, dto.Password);

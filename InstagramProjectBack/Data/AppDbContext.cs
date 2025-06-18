@@ -13,11 +13,5 @@ namespace InstagramProjectBack.Data
         public DbSet<PostComment> PostComments { get; set; }
         public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<Message> Messages { get; set; }
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-          modelBuilder.Entity<User>()
-           .Property(u => u.Streak)
-           .HasColumnType("jsonb"); 
-        }
     }
 }
