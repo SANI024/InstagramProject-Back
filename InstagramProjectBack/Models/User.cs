@@ -8,6 +8,7 @@
         public string? PofileImage { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public bool IsVerified{ get; set; }
+        public UserStreak Streak{ get; set; }
         public DateTime TokenExpiryDate { get; set; }
     }
 }
