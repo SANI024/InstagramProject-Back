@@ -61,6 +61,26 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
+        [Authorize]
+        [HttpPost("GetPost")]
+        public async Task<IActionResult> GetPost([FromBody] GetPostRequestDto dto)
+        {
+            try
+            {
+                var result = await _postRepository.GetPostAsync(dto.postId);
+                if (!result.Success)
+                {
+                    return BadRequest(new { result.Message });
+                }
+
+                return Ok(new {Post = result.Data});
+           }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
         [HttpDelete("delete post")]
         public async Task<IActionResult> RemovePost([FromBody] RemovePostRequestDto dto)
         {

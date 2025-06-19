@@ -57,6 +57,35 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
+        public async Task<BaseResponseDto<Post>> GetPostAsync(int postId)
+        {
+            Post post = _context.Posts
+            .Include(p => p.User)
+            .Include(p => p.Comments)
+            .Include(p => p.Likes)
+            .FirstOrDefault(p => p.Id == postId);
+
+            if (post == null)
+            {
+                return new BaseResponseDto<Post>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "post doesnt exists."
+                };
+            }
+
+            return new BaseResponseDto<Post>
+            {
+                Data = post,
+                Success = true,
+                Message = "Succesfully fetched post."
+
+            };
+
+            
+        }
+
         public async Task<BaseResponseDto<List<Post>>> GetPostsAsync()
         {
             var postList = await _context.Posts
