@@ -1,3 +1,4 @@
+using AutoMapper;
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
@@ -8,10 +9,12 @@ namespace InstagramProjectBack.Repositories
     public class PostRepository : IPostRepository
     {
         private readonly AppDbContext _context;
+        private readonly IMapper _mapper;
 
-        public PostRepository(AppDbContext context)
+        public PostRepository(AppDbContext context,IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         public async Task<BaseResponseDto<Post>> CreatePostAsync(CreatePostDto createPostDto)
@@ -86,17 +89,21 @@ namespace InstagramProjectBack.Repositories
             
         }
 
-        public async Task<BaseResponseDto<List<Post>>> GetPostsAsync()
+        public async Task<BaseResponseDto<List<PostDto>>> GetPostsAsync()
         {
             var postList = await _context.Posts
-                .Include(p => p.User)
-                .Include(p => p.Comments)
-                .Include(p => p.Likes)
-                .ToListAsync();
+            .Include(p => p.User)
+            .Include(p => p.Comments)
+                .ThenInclude(c => c.User)
+            .Include(p => p.Likes)
+                .ThenInclude(l => l.User)
+            .ToListAsync();
+
+            var postDtos = _mapper.Map<List<PostDto>>(postList);
 
             if (postList.Count == 0)
             {
-                return new BaseResponseDto<List<Post>>
+                return new BaseResponseDto<List<PostDto>>
                 {
                     Success = false,
                     Data = null,
@@ -104,10 +111,10 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            return new BaseResponseDto<List<Post>>
+            return new BaseResponseDto<List<PostDto>>
             {
                 Success = true,
-                Data = postList,
+                Data = postDtos,
                 Message = "Successfully fetched posts."
             };
         }

@@ -36,8 +36,10 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
-        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
+        options.JsonSerializerOptions.WriteIndented = true;
     });
+builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddSingleton<TokenService>();
 builder.Services.AddSingleton<VerificationService>();
 builder.Services.AddScoped<FriendService>();
