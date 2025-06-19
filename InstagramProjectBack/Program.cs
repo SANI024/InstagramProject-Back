@@ -109,6 +109,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
         options.Events = new JwtBearerEvents
         {
+            OnAuthenticationFailed = context =>
+            {
+              context.NoResult(); // Don't throw exception
+              context.Response.StatusCode = 401;
+              context.Response.ContentType = "application/json";
+              return context.Response.WriteAsync("{\"error\": \"Invalid or expired token.\"}");
+            },
             OnMessageReceived = context =>
             {
                 var accessToken = context.Request.Query["access_token"];
