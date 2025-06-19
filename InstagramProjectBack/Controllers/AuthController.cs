@@ -78,12 +78,12 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [HttpGet("verify")]
-        public async Task<IActionResult> VerifyEmail([FromQuery] string token)
+        [HttpPost("verify")]
+        public async Task<IActionResult> VerifyEmail([FromBody] VerifyRequestDto dto)
         {
             try
             {
-                bool isVerified = await _authService.VerifyUserAsync(token);
+                bool isVerified = await _authService.VerifyUserAsync(dto.token);
 
                 if (!isVerified)
                     return BadRequest(new { Message = "User verification failed." });
