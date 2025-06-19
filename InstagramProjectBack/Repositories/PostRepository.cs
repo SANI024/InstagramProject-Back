@@ -61,6 +61,8 @@ namespace InstagramProjectBack.Repositories
         {
             var postList = await _context.Posts
                 .Include(p => p.User)
+                .Include(p => p.Comments)
+                .Include(p => p.Likes)
                 .ToListAsync();
 
             if (postList.Count == 0)

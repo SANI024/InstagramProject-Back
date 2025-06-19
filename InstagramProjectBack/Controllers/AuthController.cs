@@ -1,5 +1,8 @@
-﻿using InstagramProjectBack.Models.Dto;
+﻿using InstagramProjectBack.Models;
+using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Repositories;
+using InstagramProjectBack.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -10,10 +13,12 @@ namespace InstagramProjectBack.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
+        private readonly TokenService _tokenService;
 
-        public AuthController(IAuthService authService)
+        public AuthController(IAuthService authService,TokenService tokenService)
         {
             _authService = authService;
+            _tokenService = tokenService;
         }
 
         [HttpPost("register")]
@@ -95,6 +100,31 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
+
+        [Authorize]
+        [HttpPost("GetUser")]
+        public async Task<IActionResult> GetUser()
+        {
+            try
+            {
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _authService.GetUserAsync(userId);
+                if (result.Success == false)
+                {
+                    return BadRequest(new { Message = "invalid user id." });
+                }
+
+                return Ok(new { User = result.Data });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
+            }
+
+            
+        }
+        
         
         [HttpGet("ping")]
         public IActionResult Ping()

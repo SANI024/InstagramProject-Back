@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using InstagramProjectBack.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using System.Globalization;
 
 namespace InstagramProjectBack.Repositories
 {
@@ -28,6 +29,20 @@ namespace InstagramProjectBack.Repositories
             _tokenService = tokenService;
             _emailService = emailService;
             _verificationService = verificationService;
+        }
+
+         public async Task<BaseResponseDto<User>> GetUserAsync(int userId)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                throw new Exception("No user found with the provided email");
+
+            return new BaseResponseDto<User>
+            {
+                Success = true,
+                Message = "Succesfully returned a user",
+                Data = user
+            };    
         }
 
         public async Task<BaseResponseDto<string>> Register(UserRegisterDto dto)
@@ -121,5 +136,7 @@ namespace InstagramProjectBack.Repositories
                 Data = null
             };
         }
+
+       
     }
 }

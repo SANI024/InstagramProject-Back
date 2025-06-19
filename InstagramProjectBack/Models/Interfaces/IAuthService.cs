@@ -1,4 +1,5 @@
-﻿using InstagramProjectBack.Models.Dto;
+﻿using InstagramProjectBack.Models;
+using InstagramProjectBack.Models.Dto;
 namespace InstagramProjectBack.Repositories
 {
     public interface IAuthService
@@ -7,5 +8,6 @@ namespace InstagramProjectBack.Repositories
         Task<BaseResponseDto<string>> Login(UserLoginDto dto);
         Task<bool> VerifyUserAsync(string token);
         Task<BaseResponseDto<string>> ResendVerificationTokenAsync(string email);
+        Task<BaseResponseDto<User>>GetUserAsync(int userId);
     }
 }
