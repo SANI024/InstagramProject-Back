@@ -73,8 +73,8 @@ namespace InstagramProjectBack.Controllers
                     return BadRequest(new { result.Message });
                 }
 
-                return Ok(new {Post = result.Data});
-           }
+                return Ok(new { Post = result.Data });
+            }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
@@ -114,6 +114,24 @@ namespace InstagramProjectBack.Controllers
                     return BadRequest(new { result.Message });
 
                 return Ok(result.Data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
+        [Authorize]
+        [HttpGet("GetLikedPosts")]
+        public async Task<IActionResult> GetLikedPosts()
+        {
+            try
+            {
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _postRepository.GetLikedPostsAsync(userId);
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+                return Ok(result.Data); 
             }
             catch (Exception ex)
             {

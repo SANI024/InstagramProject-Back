@@ -11,7 +11,7 @@ namespace InstagramProjectBack.Repositories
         private readonly AppDbContext _context;
         private readonly IMapper _mapper;
 
-        public PostRepository(AppDbContext context,IMapper mapper)
+        public PostRepository(AppDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -86,7 +86,7 @@ namespace InstagramProjectBack.Repositories
 
             };
 
-            
+
         }
 
         public async Task<BaseResponseDto<List<PostDto>>> GetPostsAsync()
@@ -178,6 +178,28 @@ namespace InstagramProjectBack.Repositories
                 Success = true,
                 Data = postExists,
                 Message = "Successfully updated post."
+            };
+        }
+        public async Task<BaseResponseDto<List<Post>>> GetLikedPostsAsync(int userId)
+        {
+            var likedPosts = await _context.Posts
+             .Include(p => p.Likes)
+             .Where(p => p.Likes.Any(like => like.UserId == userId))
+             .ToListAsync();
+            if (likedPosts.Count == 0)
+            {
+                return new BaseResponseDto<List<Post>>
+                {
+                  Success = false,
+                  Data = null,
+                  Message = "no liked posts."
+                }; 
+            }
+            return new BaseResponseDto<List<Post>>
+            {
+              Success = true,
+              Data = likedPosts,
+              Message = "Succesfully returned Liked posts."
             };
         }
     }

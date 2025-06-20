@@ -57,7 +57,7 @@ namespace InstagramProjectBack.Repositories
             {
                 Name = dto.Name,
                 Email = dto.Email,
-                PofileImage = dto.ProfileImage,
+                ProfileImage = dto.ProfileImage,
                 IsVerified = false,
             };
 

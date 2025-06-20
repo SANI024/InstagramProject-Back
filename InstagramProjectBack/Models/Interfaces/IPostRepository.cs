@@ -10,5 +10,6 @@ namespace InstagramProjectBack.Repositories
         Task<BaseResponseDto<List<PostDto>>> GetPostsAsync();
         Task<BaseResponseDto<Post>> GetPostAsync(int postId);
         Task<BaseResponseDto<Post>> RemovePostAsync(int postId, int userId);
+        Task<BaseResponseDto<List<Post>>> GetLikedPostsAsync(int userId);
     }
 }
