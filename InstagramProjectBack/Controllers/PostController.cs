@@ -61,7 +61,6 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [Authorize]
         [HttpPost("GetPost")]
         public async Task<IActionResult> GetPost([FromBody] GetPostRequestDto dto)
         {
