@@ -25,7 +25,9 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontend", policy =>
     {
-        policy.WithOrigins(allowedOriginProd)
+        policy.WithOrigins(
+            "http://localhost:4200",
+            "https://nearish-front.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); 

@@ -32,8 +32,8 @@ namespace InstagramProjectBack.Controllers
                 if (!result.Success)
                 {
                     if (result.Message.Contains("already"))
-                        return Conflict(new { result.Message }); // 409 
-                    return BadRequest(new { result.Message }); // 400 
+                        return Conflict(new { result.Message });  
+                    return BadRequest(new { result.Message }); 
                 }
 
                 return Ok(result);
@@ -52,7 +52,7 @@ namespace InstagramProjectBack.Controllers
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 var result = await _friendRequestService.GetFriendRequestsServiceAsync(receiverId);
                 if (!result.Success)
-                    return NotFound(new { result.Message }); // 404 
+                    return NotFound(new { result.Message });  
 
                 return Ok(new { FriendRequests = result.Data });
             }
