@@ -8,6 +8,8 @@
         public string? ProfileImage { get; set; } = string.Empty;
         public string PasswordHash { get; set; } = string.Empty;
         public bool IsVerified{ get; set; }
+        public string? PasswordResetToken { get; set; }
+        public DateTime? PasswordResetTokenCreatedAt { get; set; }
         public DateTime TokenExpiryDate { get; set; }
     }
 }

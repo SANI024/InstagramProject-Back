@@ -8,6 +8,13 @@ namespace InstagramProjectBack.Repositories
         Task<BaseResponseDto<string>> Login(UserLoginDto dto);
         Task<bool> VerifyUserAsync(string token);
         Task<BaseResponseDto<string>> ResendVerificationTokenAsync(string email);
-        Task<BaseResponseDto<User>>GetUserAsync(int userId);
+        Task<BaseResponseDto<User>> GetUserAsync(int userId);
+        Task<BaseResponseDto<User>> GetUserByEmailAsync(string email);
+        Task<BaseResponseDto<User>> UpdateUserAsync(int userId,
+    string? username = null,
+    string? email = null,
+    string? password = null,
+    string? profileImage = null,
+    string? passwordResetToken = null);
     }
 }

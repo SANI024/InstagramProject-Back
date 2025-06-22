@@ -31,7 +31,7 @@ namespace InstagramProjectBack.Repositories
             _verificationService = verificationService;
         }
 
-         public async Task<BaseResponseDto<User>> GetUserAsync(int userId)
+        public async Task<BaseResponseDto<User>> GetUserAsync(int userId)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
             if (user == null)
@@ -42,7 +42,21 @@ namespace InstagramProjectBack.Repositories
                 Success = true,
                 Message = "Succesfully returned a user",
                 Data = user
-            };    
+            };
+        }
+
+        public async Task<BaseResponseDto<User>> GetUserByEmailAsync(string email)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+                throw new Exception("No user found with the provided email");
+
+            return new BaseResponseDto<User>
+            {
+                Success = true,
+                Message = "Succesfully returned a user",
+                Data = user
+            };
         }
 
         public async Task<BaseResponseDto<string>> Register(UserRegisterDto dto)
@@ -137,6 +151,50 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
-       
+        public async Task<BaseResponseDto<User>> UpdateUserAsync(
+          int userId,
+          string? username = null,
+          string? email = null,
+          string? password = null,
+          string? profileImage = null,
+          string? passwordResetToken = null
+          )
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+            {
+                return null;
+            }
+
+            if (!string.IsNullOrWhiteSpace(username))
+                user.Name = username;
+
+            if (!string.IsNullOrWhiteSpace(email))
+                user.Email = email;
+
+            if (!string.IsNullOrWhiteSpace(password))
+                user.PasswordHash = _passwordHasher.HashPassword(user, password);
+
+            if (!string.IsNullOrWhiteSpace(profileImage))
+                user.ProfileImage = profileImage;
+
+            if (!string.IsNullOrEmpty(passwordResetToken))
+            {
+                user.PasswordResetToken = passwordResetToken;
+                user.PasswordResetTokenCreatedAt = DateTime.UtcNow;
+            }
+
+            await _context.SaveChangesAsync();
+
+            return new BaseResponseDto<User>
+            {
+                Message = "updated user",
+                Success = true,
+                Data = user
+            };
+        }
+
+
+
     }
 }

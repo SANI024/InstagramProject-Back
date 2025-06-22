@@ -3,8 +3,9 @@ using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Repositories;
 using InstagramProjectBack.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
+using InstagramProjectBack.Models.Dto;
 
 namespace InstagramProjectBack.Controllers
 {
@@ -14,11 +15,15 @@ namespace InstagramProjectBack.Controllers
     {
         private readonly IAuthService _authService;
         private readonly TokenService _tokenService;
+        private readonly EmailService _emailService;
+        private readonly IPasswordHasher<User> _passwordHasher;
 
-        public AuthController(IAuthService authService,TokenService tokenService)
+        public AuthController(IAuthService authService, TokenService tokenService, EmailService emailService, IPasswordHasher<User> passwordHasher)
         {
             _authService = authService;
             _tokenService = tokenService;
+            _emailService = emailService;
+            _passwordHasher = passwordHasher;
         }
 
         [HttpPost("register")]
@@ -122,14 +127,96 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
 
-            
+
         }
-        
-        
+
+        [HttpPost("ForgotPassowrd")]
+        public async Task<IActionResult> ForgotPassword(ForgotPassowrdRequestDto dto)
+        {
+            try
+            {
+                BaseResponseDto<User> result = await _authService.GetUserByEmailAsync(dto.Email);
+                if (result == null)
+                {
+                    return BadRequest(new { message = $"user with email: {dto.Email} was not found." });
+                }
+                if (string.IsNullOrEmpty(result.Data.Email))
+                {
+                    return StatusCode(500, new { message = "User email is missing." });
+                }
+                if (result.Data.PasswordResetTokenCreatedAt.HasValue &&
+                   DateTime.UtcNow - result.Data.PasswordResetTokenCreatedAt.Value < TimeSpan.FromMinutes(60))
+                {
+                    return BadRequest(new { message = "Please wait before requesting another reset email." });
+                }
+
+
+                string token = _tokenService.GeneratePasswordResetToken(result.Data.Id.ToString(), result.Data.Email);
+                var response = await _authService.UpdateUserAsync(result.Data.Id, passwordResetToken: token);
+                await _emailService.SendPasswordResetEmail(result.Data.Email, token);
+                return Ok(new { message = "Reset password link sent to your email." });
+            }
+            catch (Exception ex)
+            {
+
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
+            }
+        }
+        [HttpPost("ResetPassword")]
+        public async Task<IActionResult> ResetPassword(ResetPasswordRequestDto dto)
+        {
+            try
+            {
+
+                var principal = _tokenService.GetPrincipalFromToken(dto.Token);
+                if (principal == null)
+                    return BadRequest(new { message = "Invalid token." });
+
+
+                string userIdStr = principal.FindFirst("sub")?.Value;
+                if (string.IsNullOrEmpty(userIdStr))
+                    return BadRequest(new { message = "Invalid token data." });
+
+
+                if (!int.TryParse(userIdStr, out int userId))
+                    return BadRequest(new { message = "Invalid user ID in token." });
+
+                var userResponse = await _authService.GetUserAsync(userId);
+                if (userResponse == null || userResponse.Data == null)
+                    return BadRequest(new { message = "User not found." });
+
+                var user = userResponse.Data;
+
+
+                if (user.PasswordResetToken != dto.Token)
+                    return BadRequest(new { message = "Invalid or expired token." });
+
+
+                if (!user.PasswordResetTokenCreatedAt.HasValue ||
+                    DateTime.UtcNow - user.PasswordResetTokenCreatedAt.Value > TimeSpan.FromHours(1))
+                    return BadRequest(new { message = "Token expired." });
+
+
+                user.PasswordHash = _passwordHasher.HashPassword(user, dto.NewPassword);
+
+                user.PasswordResetToken = null;
+                user.PasswordResetTokenCreatedAt = null;
+
+
+                await _authService.UpdateUserAsync(user.Id, user.PasswordHash, null, null);
+
+                return Ok(new { message = "Password successfully reset." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = "Server error", details = ex.Message });
+            }
+        }
+
         [HttpGet("ping")]
         public IActionResult Ping()
         {
-           return Ok("Alive");
+            return Ok("Alive");
         }
     }
 }
