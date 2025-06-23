@@ -2,8 +2,10 @@ using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Repositories;
 using InstagramProjectBack.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using System.Threading.Tasks;
 
 namespace InstagramProjectBack.Controllers
@@ -130,7 +132,7 @@ namespace InstagramProjectBack.Controllers
                 var result = await _postRepository.GetLikedPostsAsync(userId);
                 if (!result.Success)
                     return BadRequest(new { result.Message });
-                return Ok(result.Data); 
+                return Ok(result.Data);
             }
             catch (Exception ex)
             {
@@ -148,12 +150,31 @@ namespace InstagramProjectBack.Controllers
                 if (!result.Success)
                     return BadRequest(new { result.Message });
                 return Ok(result.Data);
-            
+
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+
+        [HttpGet("GetCreatedPostsByUser/{id}")]
+        public async Task<IActionResult> GetCreatedPostsByUser(int id)
+        {
+            try
+            {
+                var result = await _postRepository.GetCreatedPostByUser(id);
+                if (!result.Success)
+                    return NotFound(new { result.Message });
+
+                return Ok(result.Data);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
+
     }
 }

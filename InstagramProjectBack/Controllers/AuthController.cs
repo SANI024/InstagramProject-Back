@@ -211,6 +211,16 @@ namespace InstagramProjectBack.Controllers
         }
 
 
+        [HttpGet("Users/{id}")]
+        public async Task<IActionResult> GetUserById(int id)
+        {
+            var result = await _authService.GetUserAsync(id);
+            if (result == null)
+                return NotFound(new { Message = "User not found" });
+            return Ok(result);
+        }
+
+
         [HttpGet("ping")]
         public IActionResult Ping()
         {
