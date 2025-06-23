@@ -17,6 +17,15 @@ namespace InstagramProjectBack.Repositories
 
         public async Task<BaseResponseDto<Friend_Request>> SendFriendRequestAsync(int sender_id, int reciver_id)
         {
+            if (sender_id == reciver_id)
+            {
+                return new BaseResponseDto<Friend_Request>
+                {
+                    Success = false,
+                    Message = "You cannot send a friend request to yourself.",
+                    Data = null
+                };
+            }
             var friendRequestExists = await _context.Friend_Requests
                 .FirstOrDefaultAsync(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
 
