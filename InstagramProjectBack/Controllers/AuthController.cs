@@ -133,7 +133,7 @@ namespace InstagramProjectBack.Controllers
 
         }
 
-        [HttpPost("ForgotPassowrd")]
+        [HttpPost("ForgotPassword")]
         public async Task<IActionResult> ForgotPassword(ForgotPassowrdRequestDto dto)
         {
             try
