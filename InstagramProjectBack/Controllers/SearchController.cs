@@ -16,9 +16,9 @@ namespace InstagramProjectBack.Controllers
                     return BadRequest("Query is required");
                 }
 
-                // Your search logic here
 
-                return Ok(); // Make sure this exists!
+
+                return Ok();
             }
             catch (Exception ex)
             {

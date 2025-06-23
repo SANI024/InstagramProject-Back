@@ -7,6 +7,8 @@ namespace InstagramProjectBack.SignalR
     {
         public override async Task OnConnectedAsync()
         {
+            var userId = Context.UserIdentifier;
+            Console.WriteLine($"User connected: {userId}");
             await base.OnConnectedAsync();
         }
 

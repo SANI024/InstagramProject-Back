@@ -1,6 +1,7 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstagramProjectBack.Repositories
@@ -51,6 +52,7 @@ namespace InstagramProjectBack.Repositories
         public async Task<BaseResponseDto<List<Friend_Request>>> GetFriendRequestsByReciverIdAsync(int reciver_id)
         {
             var friendRequests = await _context.Friend_Requests
+                .Include(fr => fr.Sender)
                 .Where(fr => fr.Reciver_Id == reciver_id && fr.Status == FriendRequestStatus.Pending)
                 .ToListAsync();
 
