@@ -37,7 +37,7 @@ namespace InstagramProjectBack.Services
 
         public async Task SendPasswordResetEmail(string to, string token)
         {
-            string verificationLink = $"https://nearish-front.vercel.app/passwordReset/{token}";
+            string verificationLink = $"http://localhost:4200/passwordReset/{token}";
             var message = new MimeMessage();
             string from = _emailSettings.Username;
             string fromName = from.Split("@")[0];

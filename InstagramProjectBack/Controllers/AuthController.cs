@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using InstagramProjectBack.Models.Dto;
 using System.Security.Claims;
+using InstagramProjectBack.Data;
 
 namespace InstagramProjectBack.Controllers
 {
@@ -14,6 +15,7 @@ namespace InstagramProjectBack.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
+        private readonly AppDbContext _context;
         private readonly IAuthService _authService;
         private readonly TokenService _tokenService;
         private readonly EmailService _emailService;
@@ -168,52 +170,46 @@ namespace InstagramProjectBack.Controllers
         {
             try
             {
-
+                Console.WriteLine("Getting principal from token");
                 var principal = _tokenService.GetPrincipalFromToken(dto.Token);
-                Console.WriteLine("principal:", principal);
+                Console.WriteLine(principal == null ? "principal is null" : "principal found");
                 if (principal == null)
                     return BadRequest(new { message = "Invalid token." });
 
-
                 string userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+                Console.WriteLine($"userIdStr: {userIdStr}");
                 if (string.IsNullOrEmpty(userIdStr))
                     return BadRequest(new { message = "Invalid token data." });
-
 
                 if (!int.TryParse(userIdStr, out int userId))
                     return BadRequest(new { message = "Invalid user ID in token." });
 
                 var userResponse = await _authService.GetUserAsync(userId);
-                if (userResponse == null || userResponse.Data == null)
+                if (userResponse?.Data == null)
                     return BadRequest(new { message = "User not found." });
 
                 var user = userResponse.Data;
 
-
                 if (user.PasswordResetToken != dto.Token)
                     return BadRequest(new { message = "Invalid or expired token." });
-
 
                 if (!user.PasswordResetTokenCreatedAt.HasValue ||
                     DateTime.UtcNow - user.PasswordResetTokenCreatedAt.Value > TimeSpan.FromHours(1))
                     return BadRequest(new { message = "Token expired." });
 
-
-                user.PasswordHash = _passwordHasher.HashPassword(user, dto.NewPassword);
-
-                user.PasswordResetToken = null;
-                user.PasswordResetTokenCreatedAt = null;
-
-
-                await _authService.UpdateUserAsync(user.Id, user.PasswordHash, null, null);
+                var updateResponse = await _authService.ResetPasswordAsync(userId, dto.NewPassword);
+                if (!updateResponse.Success)
+                    return BadRequest(new { message = updateResponse.Message });
 
                 return Ok(new { message = "Password successfully reset." });
+
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = "Server error", details = ex.Message });
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
             }
         }
+
 
         [HttpGet("ping")]
         public IActionResult Ping()

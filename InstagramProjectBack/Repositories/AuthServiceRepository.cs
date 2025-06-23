@@ -195,6 +195,29 @@ namespace InstagramProjectBack.Repositories
         }
 
 
+        public async Task<BaseResponseDto<User>> ResetPasswordAsync(int userId, string newPassword)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null)
+                return new BaseResponseDto<User>
+                {
+                    Success = false,
+                    Message = "User not found."
+                };
+
+            user.PasswordHash = _passwordHasher.HashPassword(user, newPassword);
+            user.PasswordResetToken = null;
+            user.PasswordResetTokenCreatedAt = null;
+
+            await _context.SaveChangesAsync();
+
+            return new BaseResponseDto<User>
+            {
+                Success = true,
+                Message = "Password reset successful.",
+                Data = user
+            };
+        }
 
     }
 }
