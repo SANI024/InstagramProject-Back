@@ -202,5 +202,32 @@ namespace InstagramProjectBack.Repositories
               Message = "Succesfully returned Liked posts."
             };
         }
+
+        public async Task<BaseResponseDto<List<Post>>> GetCreatedPostByUser(int userId)
+        {
+            var createdPostsByUser = await _context.Posts
+        .Where(p => p.UserId == userId)
+        .Include(p => p.User)
+        .Include(p => p.Likes)
+        .Include(p => p.Comments)
+        .OrderByDescending(p => p.CreatedAt)
+        .ToListAsync();
+
+           if(createdPostsByUser.Count == 0)
+            {
+                return new BaseResponseDto<List<Post>>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "no posts created by this user."
+                };
+            }
+            return new BaseResponseDto<List<Post>>
+            {
+                Success = true,
+                Data = createdPostsByUser,
+                Message = "Succesfully returned posts created by this user."
+            };
+        }
     }
 }

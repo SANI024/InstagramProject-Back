@@ -137,5 +137,23 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+        [Authorize]
+        [HttpGet("GetCreatedPostsByUser")]
+        public async Task<IActionResult> GetCreatedPostsByUser()
+        {
+            try
+            {
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _postRepository.GetCreatedPostByUser(userId);
+                if (!result.Success)
+                    return BadRequest(new { result.Message });
+                return Ok(result.Data);
+            
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
     }
 }
