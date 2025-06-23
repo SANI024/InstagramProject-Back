@@ -145,5 +145,59 @@ namespace InstagramProjectBack.Repositories
                 Data = friendRequest
             };
         }
+
+        public async Task<BaseResponseDto<List<Friend_Request>>> getFriendsAsync(int userId)
+        {
+            var friendsList = await _context.Friend_Requests
+            .Where(fr =>
+            fr.Status == FriendRequestStatus.Accepted &&
+            (fr.Reciver_Id == userId || fr.Sender_Id == userId))
+            .ToListAsync();
+
+            if (friendsList.Count == 0)
+            {
+                return new BaseResponseDto<List<Friend_Request>>
+                {
+                    Data = friendsList,
+                    Success = false,
+                    Message = "no friends."
+                };
+            }
+
+            return new BaseResponseDto<List<Friend_Request>>
+            {
+                Data = friendsList,
+                Success = true,
+                Message = "Friend list retrieved successfully"
+            };
+        }
+
+        public async Task<BaseResponseDto<Friend_Request>> isFriendAsync(int userId, int checkerId)
+        {
+            var friend = await _context.Friend_Requests.FirstOrDefaultAsync(fr =>
+                fr.Status == FriendRequestStatus.Accepted &&
+                (
+                    (fr.Sender_Id == userId && fr.Reciver_Id == checkerId) ||
+                    (fr.Sender_Id == checkerId && fr.Reciver_Id == userId)
+                ));
+
+            if (friend == null)
+            {
+                return new BaseResponseDto<Friend_Request>
+                {
+                    Data = null,
+                    Success = false,
+                    Message = "Users are not friends"
+                };
+            }
+
+            return new BaseResponseDto<Friend_Request>
+            {
+                Data = friend,
+                Success = true,
+                Message = "Users are friends"
+            };
+        }
+
     }
 }

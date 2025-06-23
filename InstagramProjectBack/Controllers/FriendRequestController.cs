@@ -1,7 +1,9 @@
 using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Services;
+
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 using System;
 using System.Threading.Tasks;
 
@@ -32,8 +34,8 @@ namespace InstagramProjectBack.Controllers
                 if (!result.Success)
                 {
                     if (result.Message.Contains("already"))
-                        return Conflict(new { result.Message });  
-                    return BadRequest(new { result.Message }); 
+                        return Conflict(new { result.Message });
+                    return BadRequest(new { result.Message });
                 }
 
                 return Ok(result);
@@ -52,7 +54,7 @@ namespace InstagramProjectBack.Controllers
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 var result = await _friendRequestService.GetFriendRequestsServiceAsync(receiverId);
                 if (!result.Success)
-                    return NotFound(new { result.Message });  
+                    return NotFound(new { result.Message });
 
                 return Ok(new { FriendRequests = result.Data });
             }
@@ -111,5 +113,36 @@ namespace InstagramProjectBack.Controllers
                 return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
             }
         }
+
+        [HttpGet("GetFriends")]
+        public async Task<IActionResult> GetFriends()
+        {
+            try
+            {
+                int userId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _friendRequestService.getFriendsServiceAsync(userId);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("isFriend")]
+        public async Task<IActionResult> isFriend([FromBody] IsFriendRequestDto dto)
+        {
+            try
+            {
+                int checkerId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _friendRequestService.isFriendServiceAsync(dto.userId, checkerId);
+                return Ok(result.Success);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An error occurred: {ex.Message}" });
+            }
+        }
+
     }
 }

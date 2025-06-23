@@ -214,10 +214,17 @@ namespace InstagramProjectBack.Controllers
         [HttpGet("Users/{id}")]
         public async Task<IActionResult> GetUserById(int id)
         {
-            var result = await _authService.GetUserAsync(id);
-            if (result == null)
-                return NotFound(new { Message = "User not found" });
-            return Ok(result);
+            try
+            {
+                var result = await _authService.GetUserAsync(id);
+                if (result == null)
+                    return NotFound(new { Message = "User not found" });
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = "Server error", Details = ex.Message });
+            }
         }
 
 

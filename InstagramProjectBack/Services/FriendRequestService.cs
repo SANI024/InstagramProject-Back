@@ -26,7 +26,7 @@ namespace InstagramProjectBack.Services
                 return new BaseResponseDto<Friend_Request>
                 {
                     Data = null,
-                    Message = "User Doesn't Exists.",
+                    Message = status.Message,
                     Success = false,
                 };
             }
@@ -84,6 +84,28 @@ namespace InstagramProjectBack.Services
         public async Task<BaseResponseDto<Friend_Request>> RejectFriendRequestServiceAsync(int sender_id, int receiver_id)
         {
             var result = await _friendRequestRepo.RejectFriendRequestAsync(sender_id, receiver_id);
+            return new BaseResponseDto<Friend_Request>
+            {
+                Data = result.Data,
+                Message = result.Message,
+                Success = result.Success
+            };
+        }
+
+        public async Task<BaseResponseDto<List<Friend_Request>>> getFriendsServiceAsync(int userId)
+        {
+            var result = await _friendRequestRepo.getFriendsAsync(userId);
+            return new BaseResponseDto<List<Friend_Request>>
+            {
+                Data = result.Data,
+                Message = result.Message,
+                Success = result.Success
+            };
+        }
+
+        public async Task<BaseResponseDto<Friend_Request>> isFriendServiceAsync(int userId, int checkerId)
+        {
+            var result = await _friendRequestRepo.isFriendAsync(userId, checkerId);
             return new BaseResponseDto<Friend_Request>
             {
                 Data = result.Data,
