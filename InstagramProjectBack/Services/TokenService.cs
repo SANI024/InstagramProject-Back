@@ -15,6 +15,8 @@ namespace InstagramProjectBack.Services
 
         string JwtIssuerProd = Environment.GetEnvironmentVariable("Jwt_Issuer_Production");
         string JwtAudienceProd = Environment.GetEnvironmentVariable("Jwt_Audience_Production");
+        string issuer = Environment.GetEnvironmentVariable("Jwt_Issuer_Production");
+        string jwtSecret = Environment.GetEnvironmentVariable("Jwt_Secret");
         private readonly IConfiguration configuration;
         private readonly ILogger<TokenService> logger;
 
@@ -23,6 +25,7 @@ namespace InstagramProjectBack.Services
             this.configuration = configuration;
             this.logger = logger;
         }
+
 
 
         public string CreateToken(User user)
@@ -69,8 +72,8 @@ namespace InstagramProjectBack.Services
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: Environment.GetEnvironmentVariable("Jwt_Issuer"),
-                audience: Environment.GetEnvironmentVariable("Jwt_Audience"),
+                issuer: issuer,
+                audience: JwtAudienceProd,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: creds
@@ -101,16 +104,16 @@ namespace InstagramProjectBack.Services
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
                     ValidateIssuer = true,
-                    ValidIssuer = Environment.GetEnvironmentVariable("Jwt_Issuer"),
+                    ValidIssuer = issuer,
                     ValidateAudience = true,
-                    ValidAudience = Environment.GetEnvironmentVariable("Jwt_Audience_Production"),
+                    ValidAudience = JwtAudienceProd,
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.Zero
                 };
 
                 SecurityToken validatedToken;
                 var principal = tokenHandler.ValidateToken(token, validationParameters, out validatedToken);
-
+                logger.LogWarning($"Loaded issuer: '{issuer}'");
                 return principal;
             }
             catch (Exception ex)

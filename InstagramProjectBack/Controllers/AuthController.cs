@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using InstagramProjectBack.Models.Dto;
+using System.Security.Claims;
 
 namespace InstagramProjectBack.Controllers
 {
@@ -169,11 +170,12 @@ namespace InstagramProjectBack.Controllers
             {
 
                 var principal = _tokenService.GetPrincipalFromToken(dto.Token);
+                Console.WriteLine("principal:", principal);
                 if (principal == null)
                     return BadRequest(new { message = "Invalid token." });
 
 
-                string userIdStr = principal.FindFirst("sub")?.Value;
+                string userIdStr = principal.FindFirst(ClaimTypes.NameIdentifier)?.Value;
                 if (string.IsNullOrEmpty(userIdStr))
                     return BadRequest(new { message = "Invalid token data." });
 

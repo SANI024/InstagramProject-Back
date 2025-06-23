@@ -16,6 +16,7 @@ using dotenv.net;
 DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
+
 var key = Encoding.UTF8.GetBytes(Environment.GetEnvironmentVariable("Jwt_Secret"));
 string allowedOriginProd = Environment.GetEnvironmentVariable("Allowed_Origin_Production");
 string connectionString = Environment.GetEnvironmentVariable("Database_Connection_String");
@@ -30,7 +31,7 @@ builder.Services.AddCors(options =>
             "https://nearish-front.vercel.app")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials(); 
+              .AllowCredentials();
     });
 });
 builder.Services.AddSignalR();
@@ -116,10 +117,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         {
             OnAuthenticationFailed = context =>
             {
-              context.NoResult(); // Don't throw exception
-              context.Response.StatusCode = 401;
-              context.Response.ContentType = "application/json";
-              return context.Response.WriteAsync("{\"error\": \"Invalid or expired token.\"}");
+                context.NoResult(); // Don't throw exception
+                context.Response.StatusCode = 401;
+                context.Response.ContentType = "application/json";
+                return context.Response.WriteAsync("{\"error\": \"Invalid or expired token.\"}");
             },
             OnMessageReceived = context =>
             {
