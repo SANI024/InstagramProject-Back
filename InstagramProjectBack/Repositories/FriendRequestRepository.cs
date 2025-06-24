@@ -158,6 +158,8 @@ namespace InstagramProjectBack.Repositories
         public async Task<BaseResponseDto<List<Friend_Request>>> getFriendsAsync(int userId)
         {
             var friendsList = await _context.Friend_Requests
+            .Include(fr => fr.Sender)
+            .Include(fr => fr.Reciver)
             .Where(fr =>
             fr.Status == FriendRequestStatus.Accepted &&
             (fr.Reciver_Id == userId || fr.Sender_Id == userId))
