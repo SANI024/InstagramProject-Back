@@ -92,10 +92,10 @@ namespace InstagramProjectBack.Services
             };
         }
 
-        public async Task<BaseResponseDto<List<Friend_Request>>> getFriendsServiceAsync(int userId)
+        public async Task<BaseResponseDto<List<User>>> getFriendsServiceAsync(int userId)
         {
             var result = await _friendRequestRepo.getFriendsAsync(userId);
-            return new BaseResponseDto<List<Friend_Request>>
+            return new BaseResponseDto<List<User>>
             {
                 Data = result.Data,
                 Message = result.Message,

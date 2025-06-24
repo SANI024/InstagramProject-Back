@@ -53,10 +53,13 @@ namespace InstagramProjectBack.Controllers
             {
                 int receiverId = _tokenService.GetUserIdFromHttpContext(HttpContext);
                 var result = await _friendRequestService.GetFriendRequestsServiceAsync(receiverId);
-                if (!result.Success)
-                    return NotFound(new { result.Message });
+                return Ok(new
+                {
+                    FriendRequests = result.Data,
+                    Message = result.Message,
+                    Success = result.Success
+                });
 
-                return Ok(new { FriendRequests = result.Data });
             }
             catch (Exception ex)
             {

@@ -155,7 +155,7 @@ namespace InstagramProjectBack.Repositories
             };
         }
 
-        public async Task<BaseResponseDto<List<Friend_Request>>> getFriendsAsync(int userId)
+        public async Task<BaseResponseDto<List<User>>> getFriendsAsync(int userId)
         {
             var friendsList = await _context.Friend_Requests
             .Include(fr => fr.Sender)
@@ -163,11 +163,14 @@ namespace InstagramProjectBack.Repositories
             .Where(fr =>
             fr.Status == FriendRequestStatus.Accepted &&
             (fr.Reciver_Id == userId || fr.Sender_Id == userId))
+            .Select(fr => fr.Reciver_Id == userId ? fr.Sender : fr.Reciver)
             .ToListAsync();
+
+
 
             if (friendsList.Count == 0)
             {
-                return new BaseResponseDto<List<Friend_Request>>
+                return new BaseResponseDto<List<User>>
                 {
                     Data = friendsList,
                     Success = false,
@@ -175,7 +178,7 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            return new BaseResponseDto<List<Friend_Request>>
+            return new BaseResponseDto<List<User>>
             {
                 Data = friendsList,
                 Success = true,
