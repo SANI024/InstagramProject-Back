@@ -24,8 +24,14 @@ namespace InstagramProjectBack.Services
             {
                 return new BaseResponseDto<Message> { Success = false, Message = "You are not friends." };
             }
-             var sentMessage = await _messageRepository.SendMessageAsync(senderId, receiverId, message);
+            var sentMessage = await _messageRepository.SendMessageAsync(senderId, receiverId, message);
             return sentMessage;
+        }
+
+        public async Task<BaseResponseDto<List<Message>>> getMessagesAsync(int LoggedInUserId, int userId)
+        {
+            var result = await _messageRepository.GetMessagesAsync(LoggedInUserId, userId);
+            return result;
         }
 
     };

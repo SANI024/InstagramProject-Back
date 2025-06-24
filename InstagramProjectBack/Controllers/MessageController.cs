@@ -2,6 +2,7 @@ using InstagramProjectBack.Models;
 using InstagramProjectBack.Models.Dto;
 using InstagramProjectBack.Services;
 using InstagramProjectBack.SignalR;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 namespace InstagramProjectBack.Controllers
@@ -11,12 +12,14 @@ namespace InstagramProjectBack.Controllers
     public class MessageController : ControllerBase
     {
         private readonly MessageService _messageService;
+        private readonly TokenService _tokenService;
         private readonly IHubContext<ChatHub> _hubContext;
 
-        public MessageController(MessageService messageService, IHubContext<ChatHub> hubContext)
+        public MessageController(MessageService messageService, IHubContext<ChatHub> hubContext, TokenService tokenService)
         {
             _messageService = messageService;
             _hubContext = hubContext;
+            _tokenService = tokenService;
         }
 
         [HttpPost("sendMessage")]
@@ -43,6 +46,21 @@ namespace InstagramProjectBack.Controllers
                 {
                     Message = "Message sent successfully.",
                 });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { Message = $"An internal error occurred: {ex.Message}" });
+            }
+        }
+
+        [HttpPost("getMessages")]
+        public async Task<IActionResult> getMessages(getMessagesRequestDto dto)
+        {
+            try
+            {
+                int loggedInUserId = _tokenService.GetUserIdFromHttpContext(HttpContext);
+                var result = await _messageService.getMessagesAsync(loggedInUserId, dto.userId);
+                return Ok(result);
             }
             catch (Exception ex)
             {

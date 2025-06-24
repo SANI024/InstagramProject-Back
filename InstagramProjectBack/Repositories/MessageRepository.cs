@@ -1,5 +1,6 @@
 using InstagramProjectBack.Data;
 using InstagramProjectBack.Models;
+
 using Microsoft.EntityFrameworkCore;
 
 namespace InstagramProjectBack.Repositories
@@ -13,9 +14,9 @@ namespace InstagramProjectBack.Repositories
             _context = context;
         }
 
-        public async Task<BaseResponseDto<List<Message>>> GetMessagesAsync(int userId)
+        public async Task<BaseResponseDto<List<Message>>> GetMessagesAsync(int loggedInUserId, int userId)
         {
-            var userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            var userExists = await _context.Users.FirstOrDefaultAsync(u => u.Id == loggedInUserId);
             if (userExists == null)
             {
                 return new BaseResponseDto<List<Message>>
@@ -26,11 +27,13 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            var userMessages = await _context.Messages
-                .Where(m => m.ReciverId == userId || m.SenderId == userId)
-                .ToListAsync();
+            var messages = await _context.Messages
+             .Where(m =>
+            (m.SenderId == loggedInUserId && m.ReciverId == userId) ||
+            (m.SenderId == userId && m.ReciverId == loggedInUserId))
+            .ToListAsync();
 
-            if (userMessages.Count == 0)
+            if (messages.Count == 0)
             {
                 return new BaseResponseDto<List<Message>>
                 {
@@ -43,7 +46,7 @@ namespace InstagramProjectBack.Repositories
             return new BaseResponseDto<List<Message>>
             {
                 Success = true,
-                Data = userMessages,
+                Data = messages,
                 Message = "Successfully fetched messages."
             };
         }
