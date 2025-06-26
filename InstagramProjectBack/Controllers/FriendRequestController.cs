@@ -132,14 +132,14 @@ namespace InstagramProjectBack.Controllers
             }
         }
 
-        [HttpPost("isFriend")]
-        public async Task<IActionResult> isFriend([FromBody] IsFriendRequestDto dto)
+        [HttpPost("FriendStatus")]
+        public async Task<IActionResult> FriendStatus([FromBody] IsFriendRequestDto dto)
         {
             try
             {
                 int checkerId = _tokenService.GetUserIdFromHttpContext(HttpContext);
-                var result = await _friendRequestService.isFriendServiceAsync(dto.userId, checkerId);
-                return Ok(result.Success);
+                var result = await _friendRequestService.FriendRequestStatusServiceAsync(dto.userId, checkerId);
+                return Ok(result);
             }
             catch (Exception ex)
             {

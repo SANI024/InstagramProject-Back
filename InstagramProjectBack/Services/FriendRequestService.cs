@@ -18,12 +18,12 @@ namespace InstagramProjectBack.Services
             _friendRequestRepo = friendRequestRepo;
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> SendFriendRequestServiceAsync(int sender_id, int reciver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> SendFriendRequestServiceAsync(int sender_id, int reciver_id)
         {
             var status = await _friendRequestRepo.SendFriendRequestAsync(sender_id, reciver_id);
             if (!status.Success)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Data = null,
                     Message = status.Message,
@@ -43,7 +43,7 @@ namespace InstagramProjectBack.Services
 
             if (sendNotif == null)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = status.Success,
                     Data = status.Data,
@@ -51,7 +51,7 @@ namespace InstagramProjectBack.Services
                 };
             }
 
-            return new BaseResponseDto<Friend_Request>
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Success = status.Success,
                 Data = status.Data,
@@ -59,10 +59,10 @@ namespace InstagramProjectBack.Services
             };
         }
 
-        public async Task<BaseResponseDto<List<Friend_Request>>> GetFriendRequestsServiceAsync(int userId)
+        public async Task<BaseResponseDto<List<Friend_RequestDto>>> GetFriendRequestsServiceAsync(int userId)
         {
             var friendRequests = await _friendRequestRepo.GetFriendRequestsByReciverIdAsync(userId);
-            return new BaseResponseDto<List<Friend_Request>>
+            return new BaseResponseDto<List<Friend_RequestDto>>
             {
                 Data = friendRequests.Data,
                 Message = friendRequests.Message,
@@ -70,10 +70,10 @@ namespace InstagramProjectBack.Services
             };
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> AcceptFriendRequestServiceAsync(int sender_id, int receiver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> AcceptFriendRequestServiceAsync(int sender_id, int receiver_id)
         {
             var result = await _friendRequestRepo.AcceptFriendRequestAsync(sender_id, receiver_id);
-            return new BaseResponseDto<Friend_Request>
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Data = result.Data,
                 Message = result.Message,
@@ -81,10 +81,10 @@ namespace InstagramProjectBack.Services
             };
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> RejectFriendRequestServiceAsync(int sender_id, int receiver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> RejectFriendRequestServiceAsync(int sender_id, int receiver_id)
         {
             var result = await _friendRequestRepo.RejectFriendRequestAsync(sender_id, receiver_id);
-            return new BaseResponseDto<Friend_Request>
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Data = result.Data,
                 Message = result.Message,
@@ -92,21 +92,22 @@ namespace InstagramProjectBack.Services
             };
         }
 
-        public async Task<BaseResponseDto<List<User>>> getFriendsServiceAsync(int userId)
+        public async Task<BaseResponseDto<List<UserDto>>> getFriendsServiceAsync(int userId)
         {
             var result = await _friendRequestRepo.getFriendsAsync(userId);
-            return new BaseResponseDto<List<User>>
+            return new BaseResponseDto<List<UserDto>>
             {
                 Data = result.Data,
                 Message = result.Message,
                 Success = result.Success
-            };
+            }
+            ;
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> isFriendServiceAsync(int userId, int checkerId)
+        public async Task<BaseResponseDto<Friend_RequestDto>> FriendRequestStatusServiceAsync(int userId, int checkerId)
         {
-            var result = await _friendRequestRepo.isFriendAsync(userId, checkerId);
-            return new BaseResponseDto<Friend_Request>
+            var result = await _friendRequestRepo.GetFriendRequestStatusAsync(userId, checkerId);
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Data = result.Data,
                 Message = result.Message,

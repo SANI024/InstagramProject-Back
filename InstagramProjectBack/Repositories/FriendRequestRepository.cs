@@ -15,11 +15,11 @@ namespace InstagramProjectBack.Repositories
             _context = context;
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> SendFriendRequestAsync(int sender_id, int reciver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> SendFriendRequestAsync(int sender_id, int reciver_id)
         {
             if (sender_id == reciver_id)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "You cannot send a friend request to yourself.",
@@ -31,7 +31,7 @@ namespace InstagramProjectBack.Repositories
 
             if (friendRequestExists != null)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "Friend request already sent.",
@@ -50,15 +50,23 @@ namespace InstagramProjectBack.Repositories
             await _context.Friend_Requests.AddAsync(newFriendRequest);
             await _context.SaveChangesAsync();
 
-            return new BaseResponseDto<Friend_Request>
+            var newFriendRequestDto = new Friend_RequestDto
+            {
+                Sender_Id = sender_id,
+                Reciver_Id = reciver_id,
+                Status = FriendRequestStatus.Pending,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Success = true,
                 Message = "Friend request sent successfully.",
-                Data = newFriendRequest
+                Data = newFriendRequestDto
             };
         }
 
-        public async Task<BaseResponseDto<List<Friend_Request>>> GetFriendRequestsByReciverIdAsync(int reciver_id)
+        public async Task<BaseResponseDto<List<Friend_RequestDto>>> GetFriendRequestsByReciverIdAsync(int reciver_id)
         {
             var friendRequests = await _context.Friend_Requests
                 .Include(fr => fr.Sender)
@@ -67,7 +75,7 @@ namespace InstagramProjectBack.Repositories
 
             if (friendRequests.Count == 0)
             {
-                return new BaseResponseDto<List<Friend_Request>>
+                return new BaseResponseDto<List<Friend_RequestDto>>
                 {
                     Success = false,
                     Message = "No requests.",
@@ -75,22 +83,46 @@ namespace InstagramProjectBack.Repositories
                 };
             }
 
-            return new BaseResponseDto<List<Friend_Request>>
+            var friendRequestDtos = friendRequests.Select(fr => new Friend_RequestDto
+            {
+                Id = fr.Id,
+                Sender_Id = fr.Sender_Id,
+                Reciver_Id = fr.Reciver_Id,
+                Status = fr.Status,
+                CreatedAt = fr.CreatedAt,
+                Sender = new UserDto
+                {
+                    Id = fr.Sender.Id,
+                    Name = fr.Sender.Name,
+                    Email = fr.Sender.Email,
+                    ProfileImage = fr.Sender.ProfileImage
+                },
+                Reciver = new UserDto
+                {
+                    Id = fr.Reciver.Id,
+                    Name = fr.Reciver.Name,
+                    Email = fr.Reciver.Email,
+                    ProfileImage = fr.Sender.ProfileImage
+                }
+            }).ToList();
+
+
+            return new BaseResponseDto<List<Friend_RequestDto>>
             {
                 Success = true,
                 Message = "Successfully fetched friend requests.",
-                Data = friendRequests
+                Data = friendRequestDtos
             };
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> AcceptFriendRequestAsync(int sender_id, int reciver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> AcceptFriendRequestAsync(int sender_id, int reciver_id)
         {
             var friendRequest = await _context.Friend_Requests
                 .FirstOrDefaultAsync(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
 
             if (friendRequest == null)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "Friend request doesn't exist.",
@@ -100,7 +132,7 @@ namespace InstagramProjectBack.Repositories
 
             if (friendRequest.Status != FriendRequestStatus.Pending)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "Friend request is not in a pending state.",
@@ -111,22 +143,45 @@ namespace InstagramProjectBack.Repositories
             friendRequest.Status = FriendRequestStatus.Accepted;
             await _context.SaveChangesAsync();
 
-            return new BaseResponseDto<Friend_Request>
+            var friendRequestDto = new Friend_RequestDto
+            {
+                Id = friendRequest.Id,
+                Sender_Id = friendRequest.Sender_Id,
+                Reciver_Id = friendRequest.Reciver_Id,
+                Status = friendRequest.Status,
+                CreatedAt = friendRequest.CreatedAt,
+                Sender = new UserDto
+                {
+                    Id = friendRequest.Sender.Id,
+                    Name = friendRequest.Sender.Name,
+                    Email = friendRequest.Sender.Email,
+                    ProfileImage = friendRequest.Sender.ProfileImage
+                },
+                Reciver = new UserDto
+                {
+                    Id = friendRequest.Reciver.Id,
+                    Name = friendRequest.Reciver.Name,
+                    Email = friendRequest.Reciver.Email,
+                    ProfileImage = friendRequest.Sender.ProfileImage
+                }
+            };
+
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Success = true,
                 Message = "Accepted friend request.",
-                Data = friendRequest
+                Data = friendRequestDto
             };
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> RejectFriendRequestAsync(int sender_id, int reciver_id)
+        public async Task<BaseResponseDto<Friend_RequestDto>> RejectFriendRequestAsync(int sender_id, int reciver_id)
         {
             var friendRequest = await _context.Friend_Requests
                 .FirstOrDefaultAsync(fr => fr.Sender_Id == sender_id && fr.Reciver_Id == reciver_id);
 
             if (friendRequest == null)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "Friend request doesn't exist.",
@@ -136,7 +191,7 @@ namespace InstagramProjectBack.Repositories
 
             if (friendRequest.Status != FriendRequestStatus.Pending)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Success = false,
                     Message = "Friend request is not in a pending state.",
@@ -147,15 +202,38 @@ namespace InstagramProjectBack.Repositories
             friendRequest.Status = FriendRequestStatus.Rejected;
             await _context.SaveChangesAsync();
 
-            return new BaseResponseDto<Friend_Request>
+            var friendRequestDto = new Friend_RequestDto
+            {
+                Id = friendRequest.Id,
+                Sender_Id = friendRequest.Sender_Id,
+                Reciver_Id = friendRequest.Reciver_Id,
+                Status = friendRequest.Status,
+                CreatedAt = friendRequest.CreatedAt,
+                Sender = new UserDto
+                {
+                    Id = friendRequest.Sender.Id,
+                    Name = friendRequest.Sender.Name,
+                    Email = friendRequest.Sender.Email,
+                    ProfileImage = friendRequest.Sender.ProfileImage
+                },
+                Reciver = new UserDto
+                {
+                    Id = friendRequest.Reciver.Id,
+                    Name = friendRequest.Reciver.Name,
+                    Email = friendRequest.Reciver.Email,
+                    ProfileImage = friendRequest.Sender.ProfileImage
+                }
+            };
+
+            return new BaseResponseDto<Friend_RequestDto>
             {
                 Success = true,
                 Message = "Rejected friend request.",
-                Data = friendRequest
+                Data = friendRequestDto
             };
         }
 
-        public async Task<BaseResponseDto<List<User>>> getFriendsAsync(int userId)
+        public async Task<BaseResponseDto<List<UserDto>>> getFriendsAsync(int userId)
         {
             var friendsList = await _context.Friend_Requests
             .Include(fr => fr.Sender)
@@ -170,44 +248,98 @@ namespace InstagramProjectBack.Repositories
 
             if (friendsList.Count == 0)
             {
-                return new BaseResponseDto<List<User>>
+                return new BaseResponseDto<List<UserDto>>
                 {
-                    Data = friendsList,
+                    Data = null,
                     Success = false,
                     Message = "no friends."
                 };
             }
 
-            return new BaseResponseDto<List<User>>
+            var friendDtos = friendsList.Select(friend => new UserDto
             {
-                Data = friendsList,
+                Id = friend.Id,
+                Name = friend.Name,
+                Email = friend.Email,
+                ProfileImage = friend.ProfileImage
+            }).ToList();
+
+            return new BaseResponseDto<List<UserDto>>
+            {
+                Data = friendDtos,
                 Success = true,
                 Message = "Friend list retrieved successfully"
             };
         }
 
-        public async Task<BaseResponseDto<Friend_Request>> isFriendAsync(int userId, int checkerId)
+        public async Task<BaseResponseDto<Friend_RequestDto>> GetFriendRequestStatusAsync(int userId, int checkerId)
         {
-            var friend = await _context.Friend_Requests.FirstOrDefaultAsync(fr =>
-                fr.Status == FriendRequestStatus.Accepted &&
+            var friend = await _context.Friend_Requests
+            .Include(fr => fr.Sender)
+            .Include(fr => fr.Reciver)
+            .FirstOrDefaultAsync(fr =>
                 (
                     (fr.Sender_Id == userId && fr.Reciver_Id == checkerId) ||
                     (fr.Sender_Id == checkerId && fr.Reciver_Id == userId)
                 ));
 
-            if (friend == null)
+            if (friend.Status == FriendRequestStatus.Pending)
             {
-                return new BaseResponseDto<Friend_Request>
+                return new BaseResponseDto<Friend_RequestDto>
                 {
                     Data = null,
                     Success = false,
-                    Message = "Users are not friends"
+                    Message = "Pending."
                 };
             }
 
-            return new BaseResponseDto<Friend_Request>
+            if (friend.Status == FriendRequestStatus.Rejected)
             {
-                Data = friend,
+                return new BaseResponseDto<Friend_RequestDto>
+                {
+                    Data = null,
+                    Success = false,
+                    Message = "Rejected."
+                };
+            }
+
+            if (friend == null)
+            {
+                return new BaseResponseDto<Friend_RequestDto>
+                {
+                    Data = null,
+                    Success = false,
+                    Message = "Users are not friends."
+                };
+            }
+
+            var FriendRequestDto = new Friend_RequestDto
+            {
+
+                Id = friend.Id,
+                Sender_Id = friend.Sender_Id,
+                Reciver_Id = friend.Reciver_Id,
+                Status = friend.Status,
+                CreatedAt = friend.CreatedAt,
+                Sender = new UserDto
+                {
+                    Id = friend.Sender.Id,
+                    Name = friend.Sender.Name,
+                    Email = friend.Sender.Email,
+                    ProfileImage = friend.Sender.ProfileImage
+                },
+                Reciver = new UserDto
+                {
+                    Id = friend.Reciver.Id,
+                    Name = friend.Reciver.Name,
+                    Email = friend.Reciver.Email,
+                    ProfileImage = friend.Sender.ProfileImage
+                }
+            };
+
+            return new BaseResponseDto<Friend_RequestDto>
+            {
+                Data = FriendRequestDto,
                 Success = true,
                 Message = "Users are friends"
             };

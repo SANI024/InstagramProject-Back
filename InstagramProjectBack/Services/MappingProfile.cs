@@ -1,4 +1,5 @@
 using AutoMapper;
+
 using InstagramProjectBack.Models;
 
 public class MappingProfile : Profile
@@ -9,5 +10,6 @@ public class MappingProfile : Profile
         CreateMap<Post, PostDto>();
         CreateMap<PostComment, PostCommentDto>();
         CreateMap<PostLike, PostLikeDto>();
+        CreateMap<Friend_Request, Friend_RequestDto>();
     }
 }
